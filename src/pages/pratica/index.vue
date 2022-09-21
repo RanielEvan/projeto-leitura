@@ -60,7 +60,10 @@ export default defineComponent({
   name: "PageIndex",
 
   data() {
-    return {};
+    return {
+      levelHint:
+        "Exercício 1... Leia em voz alta as palavras que aparecerão na tela. Para iniciar toque no botão verde ou diga 'iniciar' !",
+    };
   },
 
   computed: {
@@ -82,9 +85,8 @@ export default defineComponent({
   },
 
   mounted() {
-    const elToSpeak = document.getElementsByClassName("speaker-hint");
-    console.log("elToSpeak", elToSpeak);
-    this.$speak("Teste");
+    // const elToSpeak = document.getElementsByClassName("speaker-hint");
+    this.$speak(this.levelHint);
   },
 
   methods: {},

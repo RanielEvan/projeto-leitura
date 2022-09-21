@@ -35,23 +35,23 @@ jobs:
       - name: Pull the image
         run: sudo docker pull ranielevan/projeto-leitura:latest
 
-      # - name: Stop active instance
-      #   run: sudo docker stop projeto_leitura_instance
+      - name: Stop active instance
+        run: sudo docker stop projeto_leitura_instance
 
-      # - name: Remove stopped DefaultInstance
-      #   run: sudo docker container prune -f
+      - name: Remove stopped DefaultInstance
+        run: sudo docker container prune -f
 
       - name: Run new instance
         run: sudo docker run -it -p 8000:80 -d --name projeto_leitura_instance ranielevan/projeto-leitura:latest
 
-      # - name: Copy frontend config files
-      #   run: sudo docker cp "/home/ubuntu/default.conf" projeto_leitura_instance:"/etc/nginx/conf.d"
+      - name: Copy frontend config files
+        run: sudo docker cp "/home/ubuntu/default.conf" projeto_leitura_instance:"/etc/nginx/conf.d"
 
-      # - name: Restart container
-      #   run: sudo docker restart projeto_leitura_instance
+      - name: Restart container
+        run: sudo docker restart projeto_leitura_instance
 
-      # - name: Finished! Show running containers
-      #   run: sudo docker ps
+      - name: Finished! Show running containers
+        run: sudo docker ps
 
-      # - name: Remove old images
-      #   run: sudo docker image prune -f
+      - name: Remove old images
+        run: sudo docker image prune -f

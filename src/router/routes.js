@@ -1,10 +1,11 @@
 const routes = [
   {
     path: "/",
+    redirect: "/inicio",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
-        path: "inicio",
+        path: "/inicio",
         component: () => import("pages/inicio"),
         meta: {
           title: "Início",
@@ -13,7 +14,7 @@ const routes = [
       },
 
       {
-        path: "praticar",
+        path: "/praticar",
         component: () => import("pages/pratica"),
         meta: {
           title: "Praticar",
