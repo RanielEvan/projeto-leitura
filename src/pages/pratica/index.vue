@@ -2,18 +2,22 @@
   <div>
     <q-card class="text-center">
       <q-card-section>
-        <div class="text-h6">Exercício UM</div>
+        <div class="text-h6">Exercício Inicial</div>
 
         <div class="text-subtitle2 speaker-hint">
-          Leia em voz alta as palavras que aparecerem na tela
+          Leia em voz alta as palavras que aparecerão na tela
+        </div>
+
+        <br />
+        <div class="text-subtitle1 speaker-hint">
+          Diga <b>INICIAR</b> para começar a sessão
+          <br />
+          Diga <b>FALAR</b> para o sistema ler o texto
         </div>
       </q-card-section>
 
       <q-card-section>
-        <div class="text-h2 text-to-talk">
-          <span class="selected">Pra</span>to
-          <!-- <TextComponent /> -->
-        </div>
+        <Simulator />
       </q-card-section>
 
       <q-card-actions align="center">
@@ -46,7 +50,7 @@
           </div>
 
           <!-- <strong id="final">{{ transcricaoCompleta }}</strong> -->
-          <!-- <TextComponent /> -->
+          <!-- <Simulator /> -->
         </div>
       </q-card-section>
     </q-card>
@@ -54,15 +58,20 @@
 </template>
 
 <script>
+import Simulator from "src/components/Simulator";
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  components: {
+    Simulator,
+  },
+
   name: "PageIndex",
 
   data() {
     return {
       levelHint:
-        "Exercício 1... Leia em voz alta as palavras que aparecerão na tela. Para iniciar toque no botão verde ou diga 'iniciar' !",
+        "Exercício Inicial... Leia em voz alta as palavras que aparecerão na tela. Para ouvir o texto diga 'Falar'. Para iniciar toque no botão verde ou diga 'iniciar' !",
     };
   },
 

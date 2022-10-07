@@ -64,7 +64,8 @@ export default boot(({ app, store }) => {
       //------------------------- Comandos Diretos ------------------------------------
 
       const transcriptArr = finalTranscript.split(" ");
-      // console.log("transcrições:", transcriptArr);
+      console.log("transcrições:", transcriptArr);
+
       const stopCmd = transcriptArr.slice(-2, -1);
       // console.log("stopCmd", stopCmd);
 

@@ -17,7 +17,7 @@ export default defineComponent({
 
   data() {
     return {
-      hint: "Início... Bem vinda!",
+      hint: "Bem vindo ao Projeto Leitura!",
     };
   },
 

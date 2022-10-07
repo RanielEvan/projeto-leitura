@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh LpR fFf">
-    <q-header reveal elevated class="bg-primary text-white">
+    <q-header reveal class="bg-primary text-white headerEl">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
@@ -20,9 +20,9 @@
       :width="200"
       :breakpoint="500"
     >
-      <q-scroll-area class="fit">
-        <div class="text-center q-py-lg">
-          <q-img src="" class="logo" />
+      <q-scroll-area class="fit drawerEl">
+        <div class="text-center">
+          <h5 class="q-my-lg">Projeto<br /><b>Leitura</b></h5>
         </div>
         <q-list padding class="menu-list">
           <MenuItem
@@ -80,6 +80,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.headerEl {
+  border-radius: 0 0 0 20px;
+}
+
 .menu-list .q-item {
   border-radius: 0 32px 32px 0;
 }
@@ -97,5 +101,9 @@ export default {
 .slide-fade-leave-to {
   transform: translateY(-10px);
   opacity: 0;
+}
+
+.drawerEl {
+  background-image: linear-gradient(90deg, whitesmoke, white);
 }
 </style>
