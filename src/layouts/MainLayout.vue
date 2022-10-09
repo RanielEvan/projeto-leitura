@@ -11,6 +11,14 @@
 
           {{ routeTitle }}
         </q-toolbar-title>
+
+        <q-btn
+          dense
+          flat
+          round
+          :icon="audioOn ? 'volume_up' : 'volume_off'"
+          @click="toggleAudio"
+        />
       </q-toolbar>
     </q-header>
 
@@ -74,6 +82,17 @@ export default {
 
     routeIcon() {
       return this.$route.meta.icon;
+    },
+
+    audioOn() {
+      return this.$store.state.app.audioActive;
+    },
+  },
+
+  methods: {
+    toggleAudio() {
+      this.$store.commit("app/toggleAudioActive");
+      this.$stopSpeak();
     },
   },
 };

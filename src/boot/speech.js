@@ -7,6 +7,9 @@ export default boot(({ app, store }) => {
 
   console.log("recognition ->", recognition);
 
+  const maxListenTries = 2;
+  let listenTries = 0;
+
   recognition.continuous = false;
   recognition.interimResults = true;
   recognition.lang = "pt-BR";
@@ -22,6 +25,10 @@ export default boot(({ app, store }) => {
   }
 
   function startListening() {
+    // Para a audio descrição
+    app.config.globalProperties.$stopSpeak();
+
+    // Modo de escuta
     store.commit("app/setListening", true);
 
     //Captura final
@@ -44,6 +51,8 @@ export default boot(({ app, store }) => {
     };
 
     recognition.onresult = (event) => {
+      listenTries = 0;
+
       let finalTranscript = "";
       let interimTranscript = "";
 
@@ -52,7 +61,16 @@ export default boot(({ app, store }) => {
 
         if (event.results[i].isFinal) {
           finalTranscript += transcript + " ";
-          store.commit("app/addTranscriptSession", finalTranscript);
+
+          const acuracy =
+            app.config.globalProperties.$compareTranscript(finalTranscript);
+
+          store.commit("app/addTranscriptSession", {
+            transcript: finalTranscript,
+            acuracy: acuracy,
+            // originText: store.state.app.textToTalk,
+          });
+
           finalTranscript = "";
         } else {
           interimTranscript += transcript;
@@ -60,11 +78,12 @@ export default boot(({ app, store }) => {
       }
 
       store.commit("app/setInterimTranscript", interimTranscript);
+      // console.log("transcript:", interimTranscript);
 
       //------------------------- Comandos Diretos ------------------------------------
 
       const transcriptArr = finalTranscript.split(" ");
-      console.log("transcrições:", transcriptArr);
+      // console.log("transcrições:", transcriptArr);
 
       const stopCmd = transcriptArr.slice(-2, -1);
       // console.log("stopCmd", stopCmd);
@@ -92,9 +111,19 @@ export default boot(({ app, store }) => {
     //-----------------------------------------------------------------------
 
     recognition.onerror = (event) => {
-      console.log(
-        event.error == "no-speech" ? "Usuário não está falando." : event.error
-      );
+      // console.log(
+      //   event.error == "no-speech" ? "Usuário não está falando." : event.error
+      // );
+
+      if (event?.error == "no-speech") {
+        console.log("usuário não está falando");
+        listenTries++;
+        if (listenTries == maxListenTries) {
+          stopListening();
+        }
+      } else {
+        console.log(event?.error);
+      }
     };
   }
 

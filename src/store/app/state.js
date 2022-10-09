@@ -1,9 +1,18 @@
 export default function () {
   return {
-    userName: "User",
+    userObj: {
+      name: "User",
+      age: 27,
+    },
+
+    audioActive: true,
 
     isListening: false,
     isSpeaking: false,
+
+    level: 1,
+    textToTalk: "",
+    // textToTalkArray: [],
 
     interimTranscript: "",
     finalTranscript: "",

@@ -1,7 +1,16 @@
 <template>
-  <div class="text-h2 text-to-talk" ref="textToTalk">
-    <!-- TEXTO A SER FALADO -->
-    <!-- <span class="selected">Pra</span>to -->
+  <div>
+    <transition name="fade">
+      <div
+        v-show="!loadingNewText"
+        id="text-to-talk"
+        class="text-h4 text-to-talk"
+        ref="textToTalk"
+      >
+        <!-- TEXTO A SER FALADO -->
+        <!-- <span class="selected">Pra</span>to -->
+      </div>
+    </transition>
   </div>
 
   <!-- <q-item class="q-my-sm itemMenu" clickable v-ripple :to="path">
@@ -28,6 +37,7 @@ export default {
     return {
       result: {},
       isReadingWord: false,
+      loadingNewText: false,
     };
   },
 
@@ -60,12 +70,20 @@ export default {
   },
 
   watch: {
-    isListening(val) {
-      if (val) {
-        this.startTextReading();
-      } else {
-        this.isReadingWord = false;
-      }
+    // isListening(val) {
+    //   if (val) {
+    //     this.startTextReading();
+    //   } else {
+    //     this.isReadingWord = false;
+    //   }
+    // },
+
+    text(val) {
+      this.loadingNewText = true;
+      setTimeout(() => {
+        this.loadingNewText = false;
+        this.renderTextOutput();
+      }, 1000);
     },
   },
 
@@ -78,33 +96,31 @@ export default {
       const elementsToRender = [];
 
       this.textArray.forEach((word, index) => {
-        elementsToRender.push(`<span>${word}</span>`);
+        elementsToRender.push(`<span id="wrd_${index}">${word}</span>`);
       });
 
       const textElement = this.$refs.textToTalk;
-      textElement.innerHTML = elementsToRender.join(" ");
-    },
-
-    startTextReading() {
-      const textWordList = this.$refs.textToTalk.children;
-      console.log("TEXT WORD LIST", textWordList);
-
-      for (let i = 0; i < textWordList.length; i++) {
-        if (this.isReadingWord) {
-        }
-        // console.log("PALAVRA", textWordList[i].innerText);
-        textWordList[i].className = "selected";
-        this.$speak(textWordList[i].innerText);
-        this.isReadingWord = true;
+      if (textElement) {
+        textElement.innerHTML = elementsToRender.join(" ");
       }
     },
 
+    // async startTextReading() {
+    //   const textWordList = this.$refs.textToTalk.children;
+    //   console.log("TEXT WORD LIST", textWordList);
+
+    //   for (let i = 0; i < textWordList.length; i++) {
+    //     if (this.isReadingWord) {
+    //     }
+    //     // console.log("PALAVRA", textWordList[i].innerText);
+    //     textWordList[i].className = "selected";
+    //     await this.$speak(textWordList[i].innerText);
+    //     this.isReadingWord = true;
+    //   }
+    // },
+
     returnPartialResult() {
       this.$emit("result", this.result);
-    },
-
-    finishSession() {
-      this.$emit("finish");
     },
   },
 };
@@ -115,5 +131,35 @@ export default {
   font-family: Verdana;
   background-color: RGBA(0, 0, 0, 0.1);
   font-size: 1rem;
+}
+
+.text-to-talk {
+  font-family: Verdana;
+  font-weight: bold;
+
+  .selected {
+    color: crimson;
+    font-size: 1em;
+  }
+
+  .correct-word {
+    color: green;
+    font-size: 1em;
+  }
+  .wrong-word {
+    color: crimson;
+    font-size: 1em;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1.5s;
+}
+
+.fade-enter,
+.fade-leave-to
+/* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
 }
 </style>

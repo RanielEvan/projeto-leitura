@@ -1,6 +1,22 @@
 <template>
   <div class="text-center">
-    <TextComponent :text="levelText" @finish="finishSession" />
+    <div class="q-mb-lg">
+      <TextComponent v-if="isListening" :text="levelText" />
+
+      <q-spinner-orbit v-else size="lg" />
+    </div>
+
+    <div>
+      <slot />
+    </div>
+
+    <!-- <div class="hintLabels">
+      <div class="text-subtitle1 speaker-hint">
+        Diga <b>INICIAR</b> para começar a sessão
+        <br />
+        Diga <b>FALAR</b> para o sistema ler o texto
+      </div>
+    </div> -->
   </div>
 </template>
 
@@ -12,31 +28,21 @@ export default {
     TextComponent,
   },
 
-  data() {
-    return {
-      level: 1,
-    };
-  },
-
   computed: {
+    isListening() {
+      return this.$store.state.app.isListening || false;
+    },
+    level() {
+      return this.$store.state.app.level || false;
+    },
+
     levelText() {
-      switch (this.level) {
-        case 1:
-          return "Olá mundo!";
-        case 2:
-          return "Segundo texto maior!";
-        default:
-          return "";
-      }
+      return this.$store.state.app.textToTalk || "";
     },
   },
 
-  methods: {
-    finishSession() {
-      console.log("SESSÃO FINALIZADA!");
-
-      this.level++;
-    },
+  mounted() {
+    this.$store.dispatch("app/resetLevel");
   },
 };
 </script>

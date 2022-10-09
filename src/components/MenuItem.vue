@@ -1,5 +1,11 @@
 <template>
-  <q-item class="q-my-sm itemMenu" clickable v-ripple :to="path">
+  <q-item
+    class="q-my-sm itemMenu"
+    clickable
+    v-ripple
+    :to="path"
+    @click="$stopListening"
+  >
     <q-item-section avatar>
       <q-icon :name="icon" />
     </q-item-section>

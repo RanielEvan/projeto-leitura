@@ -7,6 +7,8 @@ export default boot(({ app, store }) => {
   let voice = null;
 
   function speak(textStr) {
+    if (!store.state.app.audioActive) return;
+
     stopSpeak();
     // console.log("VOICES", synth.getVoices());
 
@@ -47,4 +49,5 @@ export default boot(({ app, store }) => {
 
   // Torna a chamada global
   app.config.globalProperties.$speak = speak;
+  app.config.globalProperties.$stopSpeak = stopSpeak;
 });
