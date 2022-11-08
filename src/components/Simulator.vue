@@ -1,13 +1,13 @@
 <template>
   <div class="text-center">
     <div class="q-mb-lg">
-      <TextComponent v-if="isListening" :text="levelText" />
+      <TextComponent v-if="isListening" :text="levelText"/>
 
-      <q-spinner-orbit v-else size="lg" />
+      <q-spinner-orbit v-else size="lg"/>
     </div>
 
     <div>
-      <slot />
+      <slot/>
     </div>
 
     <!-- <div class="hintLabels">
@@ -24,6 +24,7 @@
 import TextComponent from "./TextComponent";
 
 export default {
+  props: ['levelText'],
   components: {
     TextComponent,
   },
@@ -36,12 +37,13 @@ export default {
       return this.$store.state.app.level || false;
     },
 
-    levelText() {
-      return this.$store.state.app.textToTalk || "";
-    },
+    // levelText() {
+    //   return this.$store.state.app.textToTalk || "";
+    // },
   },
 
   mounted() {
+    alert(this.levelText);
     this.$store.dispatch("app/resetLevel");
   },
 };
