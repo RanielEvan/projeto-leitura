@@ -16,7 +16,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
+      
+      # FRONTEND 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
@@ -24,6 +25,13 @@ jobs:
           push: true
           tags: ranielevan/projeto-leitura:latest
           
+      # BACKEND 
+      - name: Generate config files
+        uses: "finnp/create-file-action@master"
+        env:
+          FILE_NAME: "backend/.env"
+          FILE_DATA: "${{ secrets.BACKEND_ENV }}"
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
