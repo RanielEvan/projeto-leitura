@@ -55,10 +55,10 @@ jobs:
           sudo docker pull ranielevan/projeto-leitura:latest
           sudo docker pull ranielevan/projeto-leitura-back:latest
 
-      - name: Stop active instances
-        run: |
-          sudo docker stop frontend
-          sudo docker stop backend
+      # - name: Stop active instances
+      #   run: |
+      #     sudo docker stop frontend
+      #     sudo docker stop backend
 
       - name: Remove stopped DefaultInstance
         run: sudo docker container prune -f
