@@ -55,10 +55,10 @@ jobs:
           sudo docker pull ranielevan/projeto-leitura:latest
           sudo docker pull ranielevan/projeto-leitura-back:latest
 
-      # - name: Stop active instances
-      #   run: |
-      #     sudo docker stop frontend
-      #     sudo docker stop backend
+      - name: Stop active instances
+        run: |
+          sudo docker stop frontend
+          sudo docker stop backend
 
       - name: Remove stopped DefaultInstance
         run: sudo docker container prune -f
@@ -66,7 +66,7 @@ jobs:
       - name: Run new instances
         run: |
           sudo docker run -it -p 8000:80 -d --name frontend ranielevan/projeto-leitura:latest
-          sudo docker run -it -p 8000:8000 -d --name backend ranielevan/projeto-leitura-back:latest
+          sudo docker run -it -p 5000:8050 -d --name backend ranielevan/projeto-leitura-back:latest
 
       - name: Copy frontend config files
         run: |
