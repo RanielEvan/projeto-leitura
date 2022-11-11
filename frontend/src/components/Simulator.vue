@@ -33,19 +33,18 @@ export default {
     isListening() {
       return this.$store.state.app.isListening || false;
     },
-    level() {
-      return this.$store.state.app.level || false;
-    },
+    // level() {
+    //   return this.$store.state.app.level || false;
+    // },
 
     // levelText() {
     //   return this.$store.state.app.textToTalk || "";
     // },
   },
 
-  mounted() {
-    alert(this.levelText);
-    this.$store.dispatch("app/resetLevel");
-  },
+  // mounted() {
+    // this.$store.dispatch("app/resetLevel");
+  // },
 };
 </script>
 

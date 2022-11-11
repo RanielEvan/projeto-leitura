@@ -24,7 +24,7 @@
 
       <!-- TRANSCRICAO -->
       <q-card-section>
-        <Transcriptions/>
+        <Transcriptions @enviar-resposta="enviarResposta"/>
       </q-card-section>
     </q-card>
   </div>
@@ -60,14 +60,6 @@ export default defineComponent({
     isListening() {
       return this.$store.state.app.isListening || false;
     },
-
-    userLevel() {
-      return this.$store.state.app.level || "-";
-    },
-
-    excerciseNameView() {
-      return `Práticas de nível ${this.userLevel}`;
-    },
   },
 
   mounted() {
@@ -99,6 +91,26 @@ export default defineComponent({
         // this.alertErro(e);
       }
       this.dialog = false;
+    },
+
+    async enviarResposta(request) {
+      this.dialog = true;
+      try {
+        let form = new FormData();
+        form.append('id_user', this.usuario.id);
+        form.append('id_frase', this.frase.id);
+        form.append('resposta', request.frase);
+        form.append('porcentagem_acerto', request.porcentagem_acerto);
+
+        await api.post("/frase/enviar-resposta-frase", form);
+        await this.getFrase();
+
+      } catch (e) {
+        this.dialog = false;
+        console.log(e);
+        alert(e.response ? e.response.data.message : "Sem conexão com o servidor");
+        // this.alertErro(e);
+      }
     }
   },
 });
