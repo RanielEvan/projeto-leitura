@@ -11,34 +11,32 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
-      # FRONTEND 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v3
-        with:
-          context: ./frontend
-          push: true
-          tags: ranielevan/projeto-leitura:latest
-          
-      # BACKEND 
+      # - name: Login to Docker Hub
+      #   uses: docker/login-action@v2
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # # FRONTEND
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v3
+      #   with:
+      #     context: ./frontend
+      #     push: true
+      #     tags: ranielevan/projeto-leitura:latest
+
+      # BACKEND
       - name: Generate config files
         uses: "finnp/create-file-action@master"
         env:
           FILE_NAME: "backend/.env"
           FILE_DATA: "${{ secrets.BACKEND_ENV }}"
-                  
-      - name: Show context 
+
+      - name: Show context
         run: |
           ls
           cd backend
           ls
-
-
 
   #     - name: Build and push Docker image
   #       uses: docker/build-push-action@v3
@@ -62,8 +60,8 @@ jobs:
 
   #     - name: Stop active instances
   #       run: |
-  #         sudo docker stop frontend 
-  #         sudo docker stop backend 
+  #         sudo docker stop frontend
+  #         sudo docker stop backend
 
   #     - name: Remove stopped DefaultInstance
   #       run: sudo docker container prune -f
