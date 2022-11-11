@@ -34,7 +34,6 @@ jobs:
 
       - name: Show context
         run: |
-          ls
           cd backend
           ls
 
