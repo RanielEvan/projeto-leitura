@@ -27,10 +27,11 @@ jobs:
 
       # BACKEND
       - name: Generate config files
-        uses: "finnp/create-file-action@master"
-        env:
-          FILE_NAME: "backend/.env"
-          FILE_DATA: "${{ secrets.BACKEND_ENV }}"
+        run: |
+          cd backend
+          touch .env
+          echo ${{ secrets.BACKEND_ENV }} >> .env
+          ls
 
       - name: Show context
         run: |
