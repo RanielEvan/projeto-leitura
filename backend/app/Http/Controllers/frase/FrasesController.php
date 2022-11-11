@@ -18,6 +18,23 @@ class FrasesController extends Controller
         $this->frase = $frase;
     }
 
+    public function enviarAdicionarFrase(Request $request)
+    {
+        try {
+
+            if($request['senha'] != 'brena123'){
+                return response()->json(['success' => false, 'message' => 'Erro ao tentar adicionar uma nova frase, senha incorreta. Procure os desenvolvedores!'], 500);
+            }
+
+            $request['created_at'] = now();
+           $this->frase->insert($request->except('senha'));
+
+            return response()->json(['success' => true, 'message' => 'Frase adicionada com sucesso']);
+        } catch (\Exception $exception) {
+            return response()->json(['success' => false, 'message' => $exception->getMessage()], 500);
+        }
+    }
+
     public function buscarFrase(Request $request)
     {
         try {
