@@ -31,47 +31,55 @@ jobs:
         env:
           FILE_NAME: "backend/.env"
           FILE_DATA: "${{ secrets.BACKEND_ENV }}"
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v3
-        with:
-          context: ./backend
-          push: true
-          tags: ranielevan/projeto-leitura-back:latest
-
-  pull-and-execute-instance:
-    needs: build-and-run
-    runs-on: agent-runner
-
-    steps:
-      - name: Show running containers
-        run: sudo docker ps
-
-      - name: Pull images
+                  
+      - name: Show context 
         run: |
-          sudo docker pull ranielevan/projeto-leitura:latest
-          sudo docker pull ranielevan/projeto-leitura-back:latest
+          ls
+          cd backend
+          ls
 
-      - name: Stop active instances
-        run: |
-          sudo docker stop frontend 
-          sudo docker stop backend 
 
-      - name: Remove stopped DefaultInstance
-        run: sudo docker container prune -f
 
-      - name: Run new instances
-        run: |
-          sudo docker run -it -p 8000:80 -d --name frontend ranielevan/projeto-leitura:latest
-          sudo docker run -it -p 8000:8000 -d --name backend ranielevan/projeto-leitura-back:latest
+  #     - name: Build and push Docker image
+  #       uses: docker/build-push-action@v3
+  #       with:
+  #         context: ./backend
+  #         push: true
+  #         tags: ranielevan/projeto-leitura-back:latest
 
-      - name: Copy frontend config files
-        run: |
-          sudo docker cp "/home/ubuntu/default.conf" frontend:"/etc/nginx/conf.d"
-          sudo docker restart frontend
+  # pull-and-execute-instance:
+  #   needs: build-and-run
+  #   runs-on: agent-runner
 
-      - name: Finished! Show running containers
-        run: sudo docker ps
+  #   steps:
+  #     - name: Show running containers
+  #       run: sudo docker ps
 
-      - name: Remove old images
-        run: sudo docker image prune -f
+  #     - name: Pull images
+  #       run: |
+  #         sudo docker pull ranielevan/projeto-leitura:latest
+  #         sudo docker pull ranielevan/projeto-leitura-back:latest
+
+  #     - name: Stop active instances
+  #       run: |
+  #         sudo docker stop frontend 
+  #         sudo docker stop backend 
+
+  #     - name: Remove stopped DefaultInstance
+  #       run: sudo docker container prune -f
+
+  #     - name: Run new instances
+  #       run: |
+  #         sudo docker run -it -p 8000:80 -d --name frontend ranielevan/projeto-leitura:latest
+  #         sudo docker run -it -p 8000:8000 -d --name backend ranielevan/projeto-leitura-back:latest
+
+  #     - name: Copy frontend config files
+  #       run: |
+  #         sudo docker cp "/home/ubuntu/default.conf" frontend:"/etc/nginx/conf.d"
+  #         sudo docker restart frontend
+
+  #     - name: Finished! Show running containers
+  #       run: sudo docker ps
+
+  #     - name: Remove old images
+  #       run: sudo docker image prune -f
