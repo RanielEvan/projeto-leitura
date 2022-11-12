@@ -11,44 +11,56 @@
           <div class="row">
             <div
               class="col-12 formulario__input"
-              v-for="(input) in inputs"
-              :key="'input-'+input.slug"
+              v-for="input in inputs"
+              :key="'input-' + input.slug"
             >
               <q-input
                 v-if="input.tipo == 'text'"
-                rounded outlined
+                rounded
+                outlined
                 v-model="input.valor"
                 :label="input.label"
                 :placeholder="input.placeholder"
-                :rules="[ val => val && input.valor.length > 0 || 'Por favor, digite algo']"
+                :rules="[
+                  (val) =>
+                    (val && input.valor.length > 0) || 'Por favor, digite algo',
+                ]"
               />
 
               <q-input
                 v-if="input.tipo == 'number'"
                 type="number"
-                rounded outlined
+                rounded
+                outlined
                 v-model="input.valor"
                 :label="input.label"
                 :placeholder="input.placeholder"
-                :rules="[ val => val && (input.valor > 3 && input.valor < 100) || 'Por favor, digite ou selecione um número']"
+                :rules="[
+                  (val) =>
+                    (val && input.valor > 3 && input.valor < 100) ||
+                    'Por favor, digite ou selecione um número',
+                ]"
               />
 
               <q-select
                 v-if="input.tipo == 'select'"
-                rounded outlined
+                rounded
+                outlined
                 v-model="input.valor"
                 :options="input.itens"
                 option-label="nome"
                 :label="input.label"
                 :placeholder="input.placeholder"
-                :rules="[ val => val && input.valor || 'Por favor, selecione algo']"
+                :rules="[
+                  (val) => (val && input.valor) || 'Por favor, selecione algo',
+                ]"
                 @input-value="input.onClickFunction($event, input.value)"
               />
             </div>
           </div>
           <div class="formulario__botoes">
-            <q-btn rounded flat label="Limpar" type="reset" color="primary"/>
-            <q-btn rounded label="Salvar" type="submit" color="primary"/>
+            <q-btn rounded flat label="Limpar" type="reset" color="primary" />
+            <q-btn rounded label="Salvar" type="submit" color="primary" />
           </div>
         </q-form>
       </div>
@@ -64,9 +76,8 @@
 </template>
 
 <script>
-import {defineComponent} from "vue";
-import api from "src/api";
-import axios from "axios";
+import { defineComponent } from "vue";
+
 // import Loading from "../../components/Loading.vue";
 
 export default defineComponent({
@@ -84,14 +95,14 @@ export default defineComponent({
           placeholder: "Nome",
           label: "Digite seu nome",
           tipo: "text",
-          valor: null
+          valor: null,
         },
         {
           slug: "idade",
           placeholder: "Idade",
           label: "Digite sua idade",
           tipo: "number",
-          valor: null
+          valor: null,
         },
         {
           slug: "sexo",
@@ -99,15 +110,15 @@ export default defineComponent({
           tipo: "select",
           itens: [
             {
-              id: 'f',
-              nome: 'Feminino'
+              id: "f",
+              nome: "Feminino",
             },
             {
-              id: 'm',
-              nome: 'Masculino'
-            }
+              id: "m",
+              nome: "Masculino",
+            },
           ],
-          valor: null
+          valor: null,
         },
         {
           slug: "nivel_escolaridade",
@@ -115,19 +126,19 @@ export default defineComponent({
           tipo: "select",
           itens: [
             {
-              id: 'Ensino fundamental incompleto',
-              nome: 'Ensino fundamental incomplet'
+              id: "Ensino fundamental incompleto",
+              nome: "Ensino fundamental incomplet",
             },
             {
-              id: 'Ensino fundamental completo',
-              nome: 'Ensino fundamental completo'
+              id: "Ensino fundamental completo",
+              nome: "Ensino fundamental completo",
             },
             {
-              id: 'Ensino fundamental completo',
-              nome: 'Ensino fundamental completo'
+              id: "Ensino fundamental completo",
+              nome: "Ensino fundamental completo",
             },
           ],
-          valor: null
+          valor: null,
         },
         {
           slug: "cidade",
@@ -135,7 +146,7 @@ export default defineComponent({
           tipo: "select",
           itens: [],
           valor: null,
-          onClickFunction: (event, item)  => {
+          onClickFunction: (event, item) => {
             alert(item);
             this.buscarBairros(item);
           },
@@ -145,7 +156,7 @@ export default defineComponent({
           label: "Selecione seu bairro",
           tipo: "select",
           itens: [],
-          valor: null
+          valor: null,
         },
       ],
     };
@@ -166,26 +177,31 @@ export default defineComponent({
         let form = new FormData();
 
         this.inputs.forEach((input) => {
-          let valor = '';
-          if(input.tipo == 'select' && ['cidade', 'bairro'].includes(input.slug)){
+          let valor = "";
+          if (
+            input.tipo == "select" &&
+            ["cidade", "bairro"].includes(input.slug)
+          ) {
             valor = input.valor.nome;
-          }else if(input.tipo == 'select'){
+          } else if (input.tipo == "select") {
             valor = input.valor.id;
-          }else{
+          } else {
             valor = input.valor;
           }
 
           form.append(input.slug, valor);
         });
 
-        let dados = await api.post("/user/enviar-criar", form);
+        let dados = await this.$api.post("/user/enviar-criar", form);
 
         this.atualizarLocalStorage(dados.data.usuario);
         alert("Usuário cadastrado com sucesso");
         this.$router.push("/praticar");
       } catch (e) {
         console.log(e);
-        alert(e.response ? e.response.data.message : "Sem conexão com o servidor");
+        alert(
+          e.response ? e.response.data.message : "Sem conexão com o servidor"
+        );
         // this.alertErro(e);
       }
       this.dialog = false;
@@ -214,14 +230,18 @@ export default defineComponent({
     async inicio() {
       this.dialog = true;
       try {
-        await axios.get("https://servicodados.ibge.gov.br/api/v1/localidades/distritos").then((response) => {
-          this.setarItens('cidade', response.data);
-          this.setarItens('bairro', response.data);
-        });
+        await this.$axios
+          .get("https://servicodados.ibge.gov.br/api/v1/localidades/distritos")
+          .then((response) => {
+            this.setarItens("cidade", response.data);
+            this.setarItens("bairro", response.data);
+          });
       } catch (e) {
         this.dialog = false;
         console.log(e);
-        alert(e.response ? e.response.data.message : "Sem conexão com o servidor");
+        alert(
+          e.response ? e.response.data.message : "Sem conexão com o servidor"
+        );
         // this.alertErro(e);
       }
     },
@@ -232,9 +252,9 @@ export default defineComponent({
       if (!usuario) {
         this.inicio();
       } else {
-        this.$router.push('/praticar');
+        this.$router.push("/praticar");
       }
-    }
+    },
   },
 
   mounted() {

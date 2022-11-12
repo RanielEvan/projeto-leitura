@@ -24,7 +24,7 @@
 
       <!-- TRANSCRICAO -->
       <q-card-section>
-        <Transcriptions @enviar-resposta="enviarResposta"/>
+        <Transcriptions @enviar-resposta="enviarResposta" />
       </q-card-section>
     </q-card>
   </div>
@@ -33,9 +33,7 @@
 <script>
 import Simulator from "src/components/Simulator";
 import Transcriptions from "src/components/Transcriptions";
-import {defineComponent} from "vue";
-import axios from "axios";
-import api from "src/api";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   components: {
@@ -47,7 +45,8 @@ export default defineComponent({
 
   data() {
     return {
-      levelHint: "Vamos praticar! Leia em voz alta as palavras que aparecerão na tela. Para iniciar toque no botão verde.",
+      levelHint:
+        "Vamos praticar! Leia em voz alta as palavras que aparecerão na tela. Para iniciar toque no botão verde.",
 
       dialog: false,
       usuario: {},
@@ -73,7 +72,7 @@ export default defineComponent({
       let usuario = JSON.parse(window.localStorage.getItem("leituraUsuario"));
 
       if (!usuario) {
-        this.$router.push('/');
+        this.$router.push("/");
       } else {
         this.usuario = usuario;
         this.getFrase();
@@ -83,11 +82,15 @@ export default defineComponent({
     async getFrase() {
       this.dialog = true;
       try {
-        let dados = await api.get(`/frase/get-frase?id_user=${this.usuario.id}`);
+        let dados = await this.$api.get(
+          `/frase/get-frase?id_user=${this.usuario.id}`
+        );
         this.frase = dados.data.frase;
       } catch (e) {
         console.log(e);
-        alert(e.response ? e.response.data.message : "Sem conexão com o servidor");
+        alert(
+          e.response ? e.response.data.message : "Sem conexão com o servidor"
+        );
         // this.alertErro(e);
       }
       this.dialog = false;
@@ -97,21 +100,22 @@ export default defineComponent({
       this.dialog = true;
       try {
         let form = new FormData();
-        form.append('id_user', this.usuario.id);
-        form.append('id_frase', this.frase.id);
-        form.append('resposta', request.frase);
-        form.append('porcentagem_acerto', request.porcentagem_acerto);
+        form.append("id_user", this.usuario.id);
+        form.append("id_frase", this.frase.id);
+        form.append("resposta", request.frase);
+        form.append("porcentagem_acerto", request.porcentagem_acerto);
 
-        await api.post("/frase/enviar-resposta-frase", form);
+        await this.$api.post("/frase/enviar-resposta-frase", form);
         await this.getFrase();
-
       } catch (e) {
         this.dialog = false;
         console.log(e);
-        alert(e.response ? e.response.data.message : "Sem conexão com o servidor");
+        alert(
+          e.response ? e.response.data.message : "Sem conexão com o servidor"
+        );
         // this.alertErro(e);
       }
-    }
+    },
   },
 });
 </script>
