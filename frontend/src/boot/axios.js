@@ -10,7 +10,6 @@ import axios from "axios";
 const api = axios.create({
   // baseURL: "https://projetoleitura.sytes.net/api/"
   baseURL: "http://54.207.253.236/api",
-  // baseURL: "http://localhost:8000/api/",
 });
 
 export default boot(({ app }) => {
