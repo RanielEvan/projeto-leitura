@@ -23,6 +23,7 @@ export function setSpeaking(state, value) {
 //   state.textToTalk = getTextFromLevel(state.level);
 // }
 export function setLevel(state, { level, text }) {
+  console.log("SETANDO NIVEL:", level);
   state.level = level;
   state.textToTalk = text;
 }

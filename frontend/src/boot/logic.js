@@ -9,6 +9,8 @@ export default boot(({ app, store }) => {
     const transcriptLower = transcript.toLowerCase().trim();
     const textToTalkLower = store.state.app.textToTalk.toLowerCase().trim();
 
+    console.log("STORE STATE", store.state.app);
+
     console.log("TRANSCRIPT", transcriptLower);
     console.log("WORDS TO TALK", textToTalkLower);
 
@@ -46,8 +48,8 @@ export default boot(({ app, store }) => {
       // console.log("CHILDREN:", textEl.children);
 
       for (let it = 0; it < textToTalkWordCount; it++) {
-        // console.log("1 ->", transcriptSplitted[it]);
-        // console.log("2 ->", textToTalkSplitted[it]);
+        console.log("1 ->", transcriptSplitted[it]);
+        if (!textEl.children[it]) continue;
 
         textEl.children[it].classList = [];
 

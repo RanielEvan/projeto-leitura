@@ -133,10 +133,6 @@ export default defineComponent({
               id: "Ensino fundamental completo",
               nome: "Ensino fundamental completo",
             },
-            {
-              id: "Ensino fundamental completo",
-              nome: "Ensino fundamental completo",
-            },
           ],
           valor: null,
         },
@@ -147,7 +143,6 @@ export default defineComponent({
           itens: [],
           valor: null,
           onClickFunction: (event, item) => {
-            alert(item);
             this.buscarBairros(item);
           },
         },
@@ -195,14 +190,13 @@ export default defineComponent({
         let dados = await this.$api.post("/user/enviar-criar", form);
 
         this.atualizarLocalStorage(dados.data.usuario);
-        alert("Usuário cadastrado com sucesso");
+
         this.$router.push("/praticar");
       } catch (e) {
         console.log(e);
-        alert(
-          e.response ? e.response.data.message : "Sem conexão com o servidor"
-        );
-        // this.alertErro(e);
+        // alert(
+        //   e.response ? e.response.data.message : "Sem conexão com o servidor"
+        // );
       }
       this.dialog = false;
     },
@@ -212,7 +206,7 @@ export default defineComponent({
     },
 
     async buscarBairros(cidade) {
-      alert(cidade);
+      // alert(cidade);
     },
 
     setarItens(slug, valores) {
@@ -239,9 +233,9 @@ export default defineComponent({
       } catch (e) {
         this.dialog = false;
         console.log(e);
-        alert(
-          e.response ? e.response.data.message : "Sem conexão com o servidor"
-        );
+        // alert(
+        //   e.response ? e.response.data.message : "Sem conexão com o servidor"
+        // );
         // this.alertErro(e);
       }
     },

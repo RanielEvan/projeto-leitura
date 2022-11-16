@@ -30,8 +30,10 @@ export default {
     },
 
     listaTranscricoes() {
-      console.log(this.$store.state.app.transcriptSessions[0]);
-      alert('listaTranscricoes');
+      console.log(
+        "TRANSCRIPT SESSIONS",
+        this.$store.state.app.transcriptSessions
+      );
 
       return (
         this.$store.state.app.transcriptSessions.map(

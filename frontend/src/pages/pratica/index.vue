@@ -34,6 +34,7 @@
 import Simulator from "src/components/Simulator";
 import Transcriptions from "src/components/Transcriptions";
 import { defineComponent } from "vue";
+import { mapMutations } from "vuex";
 
 export default defineComponent({
   components: {
@@ -68,6 +69,9 @@ export default defineComponent({
   },
 
   methods: {
+    ...mapMutations({
+      setLevel: "app/setLevel",
+    }),
     verificarUsuario() {
       let usuario = JSON.parse(window.localStorage.getItem("leituraUsuario"));
 
@@ -85,13 +89,17 @@ export default defineComponent({
         let dados = await this.$api.get(
           `/frase/get-frase?id_user=${this.usuario.id}`
         );
+        console.log("DADOS", dados);
         this.frase = dados.data.frase;
+        this.setLevel({
+          level: dados.data.frase.nivel,
+          text: dados.data.frase.texto,
+        });
       } catch (e) {
         console.log(e);
-        alert(
-          e.response ? e.response.data.message : "Sem conexão com o servidor"
-        );
-        // this.alertErro(e);
+        // alert(
+        //   e.response ? e.response.data.message : "Sem conexão com o servidor"
+        // );
       }
       this.dialog = false;
     },
@@ -110,10 +118,9 @@ export default defineComponent({
       } catch (e) {
         this.dialog = false;
         console.log(e);
-        alert(
-          e.response ? e.response.data.message : "Sem conexão com o servidor"
-        );
-        // this.alertErro(e);
+        // alert(
+        //   e.response ? e.response.data.message : "Sem conexão com o servidor"
+        // );
       }
     },
   },
