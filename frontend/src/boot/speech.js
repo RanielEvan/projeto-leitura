@@ -1,6 +1,4 @@
 import { boot } from "quasar/wrappers";
-import {obterTextoDoNivel} from "src/services/textService";
-import {setLevel} from "src/store/app/mutations";
 
 export default boot(({ app, store }) => {
   const SpeechRecognition = (window.SpeechRecognition =
@@ -74,8 +72,7 @@ export default boot(({ app, store }) => {
           alert(acuracy);
 
           if(acuracy >= 0.7){
-            const usuario = JSON.parse(window.localStorage.getItem("leituraUsuario"));
-            obterTextoDoNivel(usuario.id, this.setLevel);
+            this.getFrase();
           }
         } else {
           interimTranscript += transcript;

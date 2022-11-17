@@ -61,9 +61,9 @@ export default boot(({app, store}) => {
     }
 
     // CASO DE ACERTO DO TEXTO
-    // if (acuracy == 1) {
-      // handleNewLevel();
-    // }
+    if(acuracy >= 0.7){
+      handleNewLevel();
+    }
 
     return acuracy;
   }
@@ -80,7 +80,7 @@ export default boot(({app, store}) => {
     // });
   }
 
-  // async startTextReading() {
+  // async startTextRe  ading() {
   //   const textWordList = this.$refs.textToTalk.children;
   //   console.log("TEXT WORD LIST", textWordList);
 

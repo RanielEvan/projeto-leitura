@@ -4,11 +4,8 @@ import store from "../store";
 export async function obterTextoDoNivel(userID, setLevelMethod) {
   let textToGo = "";
   try {
-    console.log(setLevelMethod);
     let dados = await api.get(`/frase/get-frase?id_user=${userID}`);
     textToGo = dados.data.frase;
-
-    console.log(textToGo);
 
     if (setLevelMethod) {
       setLevelMethod(textToGo);
