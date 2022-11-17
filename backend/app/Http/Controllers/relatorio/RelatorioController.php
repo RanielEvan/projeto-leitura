@@ -22,7 +22,7 @@ class RelatorioController extends Controller
     {
         try {
             $params['id_user'] = $request['id_user'];
-            $params['selects'] = ['respostas.id_frase', 'respostas.porcentagem_acerto', 'frases.texto as frase', 'frases.nivel'];
+            $params['selects'] = ['respostas.id', 'respostas.id_frase', 'respostas.porcentagem_acerto', 'frases.texto as frase', 'frases.nivel'];
 
             $ultimo_nivel = $this->frase->orderBy('nivel', 'desc')->first()->nivel;
 
