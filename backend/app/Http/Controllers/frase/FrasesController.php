@@ -22,12 +22,12 @@ class FrasesController extends Controller
     {
         try {
 
-            if($request['senha'] != 'brena123'){
+            if ($request['senha'] != 'brena123') {
                 return response()->json(['success' => false, 'message' => 'Erro ao tentar adicionar uma nova frase, senha incorreta. Procure os desenvolvedores!'], 500);
             }
 
             $request['created_at'] = now();
-           $this->frase->insert($request->except('senha'));
+            $this->frase->insert($request->except('senha'));
 
             return response()->json(['success' => true, 'message' => 'Frase adicionada com sucesso']);
         } catch (\Exception $exception) {
@@ -38,25 +38,37 @@ class FrasesController extends Controller
     public function buscarFrase(Request $request)
     {
         try {
+            $user = $this->user->where('id', $request['id_user'])->first();
+
             $params['id_user'] = $request['id_user'];
+            $params['nivel'] = $user->nivel;
+            $params['respostas_corretas'] = true;
             $params['selects'] = ['respostas.*', 'frases.nivel'];
-            $respostas = $this->frase->findRespostas($params);
+            $respostas_corretas = $this->frase->findRespostas($params)->pluck('id_frase');
 
-            if ($ultima_resposta = $respostas->first()) {
-                $nivel_atual = $ultima_resposta->porcentagem_acerto >= 70 ? ($ultima_resposta->nivel + 1) : $ultima_resposta->nivel;
-                $respostas_corretas = $respostas->where('porcentagem_acerto', '>=', 70)->pluck('id_frase');
+            $ultimo_nivel = $this->frase->orderBy('nivel', 'desc')->first()->nivel;
+
+            if (!$respostas_corretas) {
+                $frase = $this->frase->where('nivel', $user->nivel)->inRandomOrder()->first();
             } else {
-                $nivel_atual = 1;
-                $respostas_corretas = [];
-            }
+                do {
+                    $frase = $this->frase->whereNotIn('id', $respostas_corretas)->where('nivel', $user->nivel)->inRandomOrder()->first();
 
-            $frase = $this->frase->whereNotIn('id', $respostas_corretas)->where('nivel', $nivel_atual)->inRandomOrder()->first();
+                    if (!$frase && $user->nivel <= $ultimo_nivel) {
+                        $novo_nivel = $user->nivel + 1;
+                        $this->user->where('id', $request['id_user'])->update(['nivel' => $novo_nivel]);
+                        $user->nivel = $novo_nivel;
+                    }
+
+                } while (!$frase && $user->nivel < $ultimo_nivel);
+            }
 
             if (!$frase) {
                 return response()->json(['success' => false, 'message' => 'Parabéns, você completou o desafio da leitura!'], 500);
+            } else {
+                return response()->json(['success' => true, 'frase' => $frase]);
             }
 
-            return response()->json(['success' => true, 'frase' => $frase]);
         } catch (\Exception $exception) {
             return response()->json(['success' => false, 'message' => $exception->getMessage()], 500);
         }
@@ -66,6 +78,7 @@ class FrasesController extends Controller
     {
         try {
             $dados = $request->all();
+            $dados['created_at'] = now();
             $this->frase->createResposta($dados);
 
             return response()->json(['success' => true]);

@@ -35,7 +35,7 @@ const routes = [
         beforeEnter: appGuard,
         meta: {
           title: "Relatorio",
-          icon: "start",
+          icon: "chart",
         },
       },
     ],

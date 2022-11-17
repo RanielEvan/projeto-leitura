@@ -32,6 +32,7 @@
                 <thead>
                 <tr>
                   <th class="text-left">Frase</th>
+                  <th class="text-center">Tentativas</th>
                   <th class="text-center">Procentagem</th>
                 </tr>
                 </thead>
@@ -40,7 +41,8 @@
                   v-for="frase in nivel.frases"
                   :key="`frase-${frase.id}`"
                 >
-                  <td class="text-left">{{ frase.frase }}</td>
+                  <td class="text-left">{{ frase.texto }}</td>
+                  <td class="text-center">{{ frase.tentativas }}</td>
                   <td class="text-center">{{ frase.porcentagem_acerto }}%</td>
                 </tr>
                 </tbody>
@@ -51,7 +53,7 @@
                   show-value
                   class="text-blue"
                   :value="nivel.porcentagem_geral"
-                  size="50px"
+                  size="60px"
                   color="blue"
                 >
                   {{ nivel.porcentagem_geral }}%

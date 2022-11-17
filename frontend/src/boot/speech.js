@@ -1,4 +1,6 @@
 import { boot } from "quasar/wrappers";
+import {obterTextoDoNivel} from "src/services/textService";
+import {setLevel} from "src/store/app/mutations";
 
 export default boot(({ app, store }) => {
   const SpeechRecognition = (window.SpeechRecognition =
@@ -60,8 +62,7 @@ export default boot(({ app, store }) => {
         if (event.results[i].isFinal) {
           finalTranscript += transcript + " ";
 
-          const acuracy =
-            app.config.globalProperties.$compareTranscript(finalTranscript);
+          const acuracy = app.config.globalProperties.$compareTranscript(finalTranscript);
 
           store.dispatch("app/addTranscriptSession", {
             transcript: finalTranscript,
@@ -69,6 +70,13 @@ export default boot(({ app, store }) => {
           });
 
           finalTranscript = "";
+
+          alert(acuracy);
+
+          if(acuracy >= 0.7){
+            const usuario = JSON.parse(window.localStorage.getItem("leituraUsuario"));
+            obterTextoDoNivel(usuario.id, this.setLevel);
+          }
         } else {
           interimTranscript += transcript;
         }

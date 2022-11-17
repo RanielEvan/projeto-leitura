@@ -26,17 +26,6 @@ class UsersController extends Controller
         }
     }
 
-    public function buscarCidades(Request $request)
-    {
-        try {
-            $users = $this->user->findAll();;
-
-            return response()->json(['success' => true, 'users' => $users]);
-        } catch (\Exception $exception) {
-            return response()->json(['success' => false, 'message' => $exception->getMessage()], 500);
-        }
-    }
-
     public function enviarCriarUser(Request $request)
     {
         try {

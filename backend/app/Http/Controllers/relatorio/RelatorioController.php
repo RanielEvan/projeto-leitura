@@ -22,7 +22,7 @@ class RelatorioController extends Controller
     {
         try {
             $params['id_user'] = $request['id_user'];
-            $params['selects'] = ['respostas.porcentagem_acerto', 'frases.texto as frase', 'frases.nivel'];
+            $params['selects'] = ['respostas.id_frase', 'respostas.porcentagem_acerto', 'frases.texto as frase', 'frases.nivel'];
 
             $ultimo_nivel = $this->frase->orderBy('nivel', 'desc')->first()->nivel;
 
@@ -34,8 +34,14 @@ class RelatorioController extends Controller
                 $respostas = $this->frase->findRespostas($params);
 
                 if($dadosNivel['situacao'] = (bool)$respostas->first()){
-                    $dadosNivel['frases'] = $respostas;
-                    $dadosNivel['porcentagem_geral'] = ($respostas->sum('porcentagem_acerto') / $respostas->count());
+                    $dadosNivel['frases'] = $this->frase->whereIn('id', $respostas->pluck('id_frase'))->get();
+
+                    foreach($dadosNivel['frases'] as $frase){
+                        $respostas_frase = $respostas->where('id_frase', $frase->id);
+                        $frase->tentativas = $respostas_frase->count();
+                        $frase->porcentagem_acerto =  round(($respostas_frase->sum('porcentagem_acerto') / $respostas_frase->count()));
+                    }
+                    $dadosNivel['porcentagem_geral'] = round(($respostas->sum('porcentagem_acerto') / $respostas->count()));
                 }else{
                     $dadosNivel['frases'] = [];
                     $dadosNivel['porcentagem_geral'] = 0;

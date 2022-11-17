@@ -23,6 +23,9 @@ class Frase extends Model
                 if (isset($request['nivel'])) {
                     $query->where('frases.nivel', $request['nivel']);
                 }
+                if (isset($request['respostas_corretas'])) {
+                    $query->where('respostas.porcentagem_acerto', '>=', 70);
+                }
             })
             ->distinct('respostas.id')
             ->orderBy('respostas.id', 'desc')

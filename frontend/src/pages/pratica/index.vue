@@ -48,8 +48,7 @@ export default defineComponent({
 
   data() {
     return {
-      levelHint:
-        "Vamos praticar! Leia em voz alta as palavras que aparecerão na tela. Para iniciar toque no botão verde.",
+      levelHint: "Vamos praticar! Leia em voz alta as palavras que aparecerão na tela. Para iniciar toque no botão verde.",
 
       dialog: false,
       usuario: {},

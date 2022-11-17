@@ -1,6 +1,8 @@
-import { boot } from "quasar/wrappers";
+import {boot} from "quasar/wrappers";
+import {obterTextoDoNivel} from "src/services/textService";
+import {setLevel} from "src/store/app/mutations";
 
-export default boot(({ app, store }) => {
+export default boot(({app, store}) => {
   // let errorMargin = 0;
 
   function compareTranscript(transcript) {
@@ -60,7 +62,7 @@ export default boot(({ app, store }) => {
 
     // CASO DE ACERTO DO TEXTO
     if (acuracy == 1) {
-      handleNewLevel();
+      // handleNewLevel();
     }
 
     return acuracy;
@@ -68,14 +70,14 @@ export default boot(({ app, store }) => {
 
   //
   function handleNewLevel() {
-    store.dispatch("app/newLevel").then((resp) => {
+    // store.dispatch("app/newLevel").then((resp) => {
       // if (!resp) {
       //   console.log("RESETANDO!!");
       //   app.config.globalProperties.$stopListening();
       //   store.dispatch("app/finalizeSessions");
       //   store.dispatch("app/resetLevel");
       // }
-    });
+    // });
   }
 
   // async startTextReading() {
