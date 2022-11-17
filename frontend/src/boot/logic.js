@@ -61,9 +61,9 @@ export default boot(({app, store}) => {
     }
 
     // CASO DE ACERTO DO TEXTO
-    if (acuracy == 1) {
+    // if (acuracy == 1) {
       // handleNewLevel();
-    }
+    // }
 
     return acuracy;
   }

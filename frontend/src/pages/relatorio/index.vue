@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page>
     <div class="row w-full">
       <div class="col-12">
         <h4 class="nivel-titulo">Relatório por níveis</h4>
@@ -10,7 +10,7 @@
         :key="`nivel-${nivel.titulo}`"
       >
         <q-card class="card-nivel" flat bordered>
-          <q-card-section class="card-nivel__titulo"   @click="nivel.situacao ? nivel.expanded = !nivel.expanded : false">
+          <q-card-section class="card-nivel__titulo" @click="nivel.situacao ? nivel.expanded = !nivel.expanded : false">
             <div class="text-h5">{{ nivel.titulo }}</div>
             <q-btn
               v-if="nivel.situacao"
@@ -43,7 +43,7 @@
                 >
                   <td class="text-left">{{ frase.texto }}</td>
                   <td class="text-center">{{ frase.tentativas }}</td>
-                  <td class="text-center">{{ frase.porcentagem_acerto }}%</td>
+                  <td class="text-center text-weight-bolder" :class="frase.porcentagem_acerto > 70 ? 'text-green' : 'text-red'">{{ frase.porcentagem_acerto }}%</td>
                 </tr>
                 </tbody>
               </q-markup-table>
@@ -51,7 +51,7 @@
               <div class="card-nivel__expandido-geral">
                 <q-circular-progress
                   show-value
-                  class="text-blue"
+                  class="text-blue text-weight-bolder"
                   :value="nivel.porcentagem_geral"
                   size="60px"
                   color="blue"
@@ -121,7 +121,7 @@ export default defineComponent({
   width: 100%;
 }
 
-.nivel-titulo{
+.nivel-titulo {
   text-align: center;
 }
 
@@ -136,16 +136,26 @@ export default defineComponent({
   }
 
   &__expandido {
-    display: flex;
+    @media only screen and (min-width: 680px) {
+      display: flex;
+    }
+
     &-tabela {
       width: 100%;
     }
+
     &-geral {
       padding-left: 15px;
       padding-right: 15px;
       text-align: center;
       margin: auto;
-      >p{
+
+      @media only screen and (max-width: 680px) {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      > p {
         margin: 0;
       }
     }
