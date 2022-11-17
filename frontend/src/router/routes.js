@@ -27,6 +27,17 @@ const routes = [
           icon: "start",
         },
       },
+
+      {
+        name: "relatorio",
+        path: "/relatorio",
+        component: () => import("pages/relatorio"),
+        beforeEnter: appGuard,
+        meta: {
+          title: "Relatorio",
+          icon: "start",
+        },
+      },
     ],
   },
 

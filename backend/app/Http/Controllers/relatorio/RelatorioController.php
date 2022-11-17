@@ -34,7 +34,6 @@ class RelatorioController extends Controller
                 $respostas = $this->frase->findRespostas($params);
 
                 if($dadosNivel['situacao'] = (bool)$respostas->first()){
-
                     $dadosNivel['frases'] = $respostas;
                     $dadosNivel['porcentagem_geral'] = ($respostas->sum('porcentagem_acerto') / $respostas->count());
                 }else{

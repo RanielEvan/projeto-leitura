@@ -209,10 +209,6 @@ export default defineComponent({
       } catch (e) {
         this.dialog = false;
         console.log(e);
-        // alert(
-        //   e.response ? e.response.data.message : "Sem conexão com o servidor"
-        // );
-        // this.alertErro(e);
       }
     },
 
