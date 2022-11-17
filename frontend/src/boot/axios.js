@@ -9,7 +9,8 @@ import axios from "axios";
 // for each client)
 const api = axios.create({
   // baseURL: "https://projetoleitura.sytes.net/api/"
-  baseURL: "http://54.207.253.236/api",
+  baseURL: "https://projeto-leitura.sytes.net/api",
+  // baseURL: "http://54.207.253.236/api",
 });
 
 export default boot(({ app }) => {
