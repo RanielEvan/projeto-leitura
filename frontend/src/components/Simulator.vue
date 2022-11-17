@@ -1,7 +1,7 @@
 <template>
   <div class="text-center">
     <div class="q-mb-lg">
-      <TextComponent v-if="isListening" :text="levelText"/>
+      <TextComponent v-if="isListening || levelText" :text="levelText"/>
 
       <q-spinner-orbit v-else size="lg"/>
     </div>

@@ -61,15 +61,15 @@ export default boot(({app, store}) => {
     }
 
     // CASO DE ACERTO DO TEXTO
-    if(acuracy >= 0.7){
-      handleNewLevel();
-    }
+    // if(acuracy >= 0.7){
+    //   handleNewLevel();
+    // }
 
     return acuracy;
   }
 
   //
-  function handleNewLevel() {
+  // function handleNewLevel() {
     // store.dispatch("app/newLevel").then((resp) => {
       // if (!resp) {
       //   console.log("RESETANDO!!");
@@ -78,7 +78,7 @@ export default boot(({app, store}) => {
       //   store.dispatch("app/resetLevel");
       // }
     // });
-  }
+  // }
 
   // async startTextReading() {
   //   const textWordList = this.$refs.textToTalk.children;

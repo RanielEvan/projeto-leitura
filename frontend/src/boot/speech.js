@@ -69,10 +69,8 @@ export default boot(({ app, store }) => {
 
           finalTranscript = "";
 
-          alert(acuracy);
-
           if(acuracy >= 0.7){
-            this.getFrase();
+            this.fimFrase();
           }
         } else {
           interimTranscript += transcript;

@@ -5,13 +5,13 @@
         <div class="text-h6">Práticas de nível {{ frase.nivel }}</div>
       </q-card-section>
 
-      <q-card-section v-if="frase.id">
+      <q-card-section>
         <Simulator :levelText="frase.texto">
           <q-btn
             v-if="!isListening"
             color="green"
             icon="mic"
-            @click="$startListening()"
+            @click="$startListening(); getFrase()"
           >
             Começar a leitura
           </q-btn>
@@ -67,7 +67,6 @@ export default defineComponent({
     // const elToSpeak = document.getElementsByClassName("speaker-hint");
 
     this.verificarUsuario();
-    this.getFrase();
     this.$speak(this.levelHint);
   },
 
@@ -79,9 +78,14 @@ export default defineComponent({
       this.usuario = JSON.parse(window.localStorage.getItem("leituraUsuario"));
     },
 
+    async fimFrase() {
+      this.$stopListening();
+    },
+
     async getFrase() {
       this.dialog = true;
       this.frase = await obterTextoDoNivel(this.usuario.id, this.setLevel);
+      this.$store.state.app.transcriptSessions = [];
       this.dialog = false;
     },
   },
