@@ -10,11 +10,12 @@ export async function obterTextoDoNivel(userID, setLevelMethod) {
     if (setLevelMethod) {
       setLevelMethod(textToGo);
     }
+    return textToGo;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
+    alert(e.response.data.message);
+    return [];
   }
-
-  return textToGo;
 }
 
 export async function salvarSessaoLeitura(sessionObj) {
