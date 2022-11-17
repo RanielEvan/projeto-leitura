@@ -27,7 +27,6 @@ class Frase extends Model
                     $query->where('respostas.porcentagem_acerto', '>=', 70);
                 }
             })
-            ->groupBy('respostas.id')
             ->orderBy('respostas.id', 'desc')
             ->get();
     }
