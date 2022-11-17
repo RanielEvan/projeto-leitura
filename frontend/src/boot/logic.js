@@ -80,7 +80,7 @@ export default boot(({app, store}) => {
     // });
   }
 
-  // async startTextRe  ading() {
+  // async startTextReading() {
   //   const textWordList = this.$refs.textToTalk.children;
   //   console.log("TEXT WORD LIST", textWordList);
 
