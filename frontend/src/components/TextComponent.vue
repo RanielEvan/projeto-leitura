@@ -56,6 +56,10 @@ export default {
       return this.$store.state.app.isListening || false;
     },
 
+    textToTalk() {
+      return this.$store.state.app.textToTalk || "";
+    },
+
     // transcricaoParcial() {
     //   return this.$store.state.app.interimTranscript || "";
     // },
@@ -78,6 +82,12 @@ export default {
     //   }
     // },
 
+    textToTalk(val) {
+      this.$nextTick(() => {
+        this.renderTextOutput();
+      });
+    },
+
     text(val) {
       this.loadingNewText = true;
       setTimeout(() => {
@@ -93,13 +103,14 @@ export default {
 
   methods: {
     renderTextOutput() {
+      const textElement = this.$refs.textToTalk; // Elemento
       const elementsToRender = [];
 
-      this.textArray.forEach((word, index) => {
+      const textArray = this.textToTalk.split(" ");
+      textArray.forEach((word, index) => {
         elementsToRender.push(`<span id="wrd_${index}">${word}</span>`);
       });
 
-      const textElement = this.$refs.textToTalk;
       if (textElement) {
         textElement.innerHTML = elementsToRender.join(" ");
       }

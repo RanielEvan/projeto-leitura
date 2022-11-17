@@ -9,8 +9,6 @@ export default boot(({ app, store }) => {
     const transcriptLower = transcript.toLowerCase().trim();
     const textToTalkLower = store.state.app.textToTalk.toLowerCase().trim();
 
-    console.log("STORE STATE", store.state.app);
-
     console.log("TRANSCRIPT", transcriptLower);
     console.log("WORDS TO TALK", textToTalkLower);
 
@@ -44,11 +42,9 @@ export default boot(({ app, store }) => {
 
       // Text Element
       const textEl = document.getElementById("text-to-talk");
-      // console.log("ELEMENT:", textEl);
-      // console.log("CHILDREN:", textEl.children);
 
       for (let it = 0; it < textToTalkWordCount; it++) {
-        console.log("1 ->", transcriptSplitted[it]);
+        // console.log("1 ->", transcriptSplitted[it]);
         if (!textEl.children[it]) continue;
 
         textEl.children[it].classList = [];
@@ -73,12 +69,12 @@ export default boot(({ app, store }) => {
   //
   function handleNewLevel() {
     store.dispatch("app/newLevel").then((resp) => {
-      console.log("Novo nível, novo texto: ", resp);
-      if (!resp) {
-        app.config.globalProperties.$stopListening();
-        store.dispatch("app/finalizeSessions");
-        store.dispatch("app/resetLevel");
-      }
+      // if (!resp) {
+      //   console.log("RESETANDO!!");
+      //   app.config.globalProperties.$stopListening();
+      //   store.dispatch("app/finalizeSessions");
+      //   store.dispatch("app/resetLevel");
+      // }
     });
   }
 

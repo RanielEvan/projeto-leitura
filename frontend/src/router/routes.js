@@ -1,3 +1,5 @@
+import { appGuard } from "./appguard";
+
 const routes = [
   {
     path: "/",
@@ -5,8 +7,10 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
+        name: "inicio",
         path: "/inicio",
         component: () => import("pages/inicio"),
+        beforeEnter: appGuard,
         meta: {
           title: "Início",
           icon: "home",
@@ -14,8 +18,10 @@ const routes = [
       },
 
       {
+        name: "pratica",
         path: "/praticar",
         component: () => import("pages/pratica"),
+        beforeEnter: appGuard,
         meta: {
           title: "Praticar",
           icon: "start",

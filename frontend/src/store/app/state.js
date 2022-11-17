@@ -1,17 +1,14 @@
 export default function () {
   return {
-    userObj: {
-      name: "User",
-      age: 27,
-    },
-
     audioActive: true,
 
     isListening: false,
     isSpeaking: false,
 
-    level: 1,
+    sessionLevel: 1,
+    maxSessionLevel: 5,
     textToTalk: "",
+    textObj: {},
     // textToTalkArray: [],
 
     interimTranscript: "",
@@ -21,7 +18,7 @@ export default function () {
     userAcuracy: 0.0,
 
     userSpeech: [
-      /* 
+      /*
         Array com as palavras
       */
     ],

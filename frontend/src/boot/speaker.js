@@ -27,11 +27,11 @@ export default boot(({ app, store }) => {
     if (textStr) {
       let sInstance = new SpeechSynthesisUtterance(textStr);
       sInstance.onend = function (event) {
-        console.log("TERMINOU UMA FALA! ", event);
+        // console.log("TERMINOU UMA FALA! ", event);
         store.commit("app/setSpeaking", false);
       };
       sInstance.onerror = function (event) {
-        console.log("SPEECH -> ERROR", event);
+        // console.log("SPEECH -> ERROR", event);
         store.commit("app/setSpeaking", false);
       };
 

@@ -24,7 +24,7 @@
 
       <!-- TRANSCRICAO -->
       <q-card-section>
-        <Transcriptions @enviar-resposta="enviarResposta" />
+        <Transcriptions />
       </q-card-section>
     </q-card>
   </div>
@@ -35,6 +35,8 @@ import Simulator from "src/components/Simulator";
 import Transcriptions from "src/components/Transcriptions";
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
+
+import { obterTextoDoNivel } from "src/services/textService";
 
 export default defineComponent({
   components: {
@@ -64,8 +66,10 @@ export default defineComponent({
 
   mounted() {
     // const elToSpeak = document.getElementsByClassName("speaker-hint");
-    this.$speak(this.levelHint);
+
     this.verificarUsuario();
+    this.getFrase();
+    this.$speak(this.levelHint);
   },
 
   methods: {
@@ -73,55 +77,13 @@ export default defineComponent({
       setLevel: "app/setLevel",
     }),
     verificarUsuario() {
-      let usuario = JSON.parse(window.localStorage.getItem("leituraUsuario"));
-
-      if (!usuario) {
-        this.$router.push("/");
-      } else {
-        this.usuario = usuario;
-        this.getFrase();
-      }
+      this.usuario = JSON.parse(window.localStorage.getItem("leituraUsuario"));
     },
 
     async getFrase() {
       this.dialog = true;
-      try {
-        let dados = await this.$api.get(
-          `/frase/get-frase?id_user=${this.usuario.id}`
-        );
-        console.log("DADOS", dados);
-        this.frase = dados.data.frase;
-        this.setLevel({
-          level: dados.data.frase.nivel,
-          text: dados.data.frase.texto,
-        });
-      } catch (e) {
-        console.log(e);
-        // alert(
-        //   e.response ? e.response.data.message : "Sem conexão com o servidor"
-        // );
-      }
+      this.frase = await obterTextoDoNivel(this.usuario.id, this.setLevel);
       this.dialog = false;
-    },
-
-    async enviarResposta(request) {
-      this.dialog = true;
-      try {
-        let form = new FormData();
-        form.append("id_user", this.usuario.id);
-        form.append("id_frase", this.frase.id);
-        form.append("resposta", request.frase);
-        form.append("porcentagem_acerto", request.porcentagem_acerto);
-
-        await this.$api.post("/frase/enviar-resposta-frase", form);
-        await this.getFrase();
-      } catch (e) {
-        this.dialog = false;
-        console.log(e);
-        // alert(
-        //   e.response ? e.response.data.message : "Sem conexão com o servidor"
-        // );
-      }
     },
   },
 });

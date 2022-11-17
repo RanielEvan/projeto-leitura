@@ -21,7 +21,6 @@
 export default {
   computed: {
     transcricaoParcial() {
-      console.log(this.$store.state.app.interimTranscript);
       return this.$store.state.app.interimTranscript || "-";
     },
 
@@ -30,11 +29,6 @@ export default {
     },
 
     listaTranscricoes() {
-      console.log(
-        "TRANSCRIPT SESSIONS",
-        this.$store.state.app.transcriptSessions
-      );
-
       return (
         this.$store.state.app.transcriptSessions.map(
           (it) => `${it.transcript} (${it.acuracy * 100}%)`

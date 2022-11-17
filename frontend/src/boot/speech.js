@@ -5,8 +5,6 @@ export default boot(({ app, store }) => {
     window.SpeechRecognition || window.webkitSpeechRecognition || null);
   const recognition = new window.SpeechRecognition();
 
-  console.log("recognition ->", recognition);
-
   const maxListenTries = 2;
   let listenTries = 0;
 
@@ -65,10 +63,9 @@ export default boot(({ app, store }) => {
           const acuracy =
             app.config.globalProperties.$compareTranscript(finalTranscript);
 
-          store.commit("app/addTranscriptSession", {
+          store.dispatch("app/addTranscriptSession", {
             transcript: finalTranscript,
             acuracy: acuracy,
-            // originText: store.state.app.textToTalk,
           });
 
           finalTranscript = "";

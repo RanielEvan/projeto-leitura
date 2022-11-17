@@ -121,22 +121,6 @@ export default defineComponent({
           valor: null,
         },
         {
-          slug: "nivel_escolaridade",
-          label: "Selecione seu nível de escolaridade",
-          tipo: "select",
-          itens: [
-            {
-              id: "Ensino fundamental incompleto",
-              nome: "Ensino fundamental incomplet",
-            },
-            {
-              id: "Ensino fundamental completo",
-              nome: "Ensino fundamental completo",
-            },
-          ],
-          valor: null,
-        },
-        {
           slug: "cidade",
           label: "Selecione sua cidade",
           tipo: "select",
@@ -145,13 +129,6 @@ export default defineComponent({
           onClickFunction: (event, item) => {
             this.buscarBairros(item);
           },
-        },
-        {
-          slug: "bairro",
-          label: "Selecione seu bairro",
-          tipo: "select",
-          itens: [],
-          valor: null,
         },
       ],
     };
@@ -228,7 +205,6 @@ export default defineComponent({
           .get("https://servicodados.ibge.gov.br/api/v1/localidades/distritos")
           .then((response) => {
             this.setarItens("cidade", response.data);
-            this.setarItens("bairro", response.data);
           });
       } catch (e) {
         this.dialog = false;
