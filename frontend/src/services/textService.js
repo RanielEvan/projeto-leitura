@@ -27,12 +27,14 @@ export async function salvarSessaoLeitura(sessionObj) {
   // console.log("OBJ TO SEND", JSON.stringify(serviceObj));
   // return serviceObj;
 
+  let porcentagem = Math.round(sessionObj.acuracy * 100);
+
   try {
     let form = new FormData();
     form.append("id_user", sessionObj.idUser);
     form.append("id_frase", sessionObj.idFrase);
     form.append("resposta", sessionObj.transcript);
-    form.append("porcentagem_acerto", sessionObj.acuracy);
+    form.append("porcentagem_acerto", porcentagem);
 
     await api.post("/frase/enviar-resposta-frase", form);
   } catch (e) {

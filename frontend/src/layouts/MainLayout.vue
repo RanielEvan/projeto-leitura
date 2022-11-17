@@ -2,11 +2,11 @@
   <q-layout view="lHh LpR fFf">
     <q-header reveal class="bg-primary text-white headerEl">
       <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer"/>
 
         <q-toolbar-title>
           <q-avatar>
-            <q-icon :name="routeIcon" size="sm" />
+            <q-icon :name="routeIcon" size="sm"/>
           </q-avatar>
 
           {{ routeTitle }}
@@ -19,6 +19,12 @@
           :icon="audioOn ? 'volume_up' : 'volume_off'"
           @click="toggleAudio"
         />
+
+        <q-btn
+          dense flat round
+          icon="logout"
+          @click="sair"
+        />
       </q-toolbar>
     </q-header>
 
@@ -30,7 +36,7 @@
     >
       <q-scroll-area class="fit drawerEl">
         <div class="text-center">
-          <h5 class="q-my-lg">Projeto<br /><b>Leitura</b></h5>
+          <h5 class="q-my-lg">Projeto<br/><b>Leitura</b></h5>
         </div>
         <q-list padding class="menu-list">
           <MenuItem
@@ -50,7 +56,7 @@
         <!-- CONTEUDO DAS PAGINAS -->
 
         <!-- <transition name="slide-fade"> -->
-        <router-view />
+        <router-view/>
         <!-- </transition> -->
       </q-page>
     </q-page-container>
@@ -58,7 +64,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import {ref} from "vue";
 import MenuItem from "src/components/MenuItem.vue";
 
 export default {
@@ -71,7 +77,7 @@ export default {
       },
     };
   },
-  components: { MenuItem },
+  components: {MenuItem},
   computed: {
     routes() {
       return this.$router.options.routes[0].children;
@@ -93,6 +99,10 @@ export default {
     toggleAudio() {
       this.$store.commit("app/toggleAudioActive");
       this.$stopSpeak();
+    },
+    sair() {
+      localStorage.removeItem("leituraUsuario");
+      this.$router.push("/inicio");
     },
   },
 };
@@ -116,6 +126,7 @@ export default {
 .slide-fade-enter-active {
   transition: all 0.6s ease;
 }
+
 .slide-fade-enter,
 .slide-fade-leave-to {
   transform: translateY(-10px);
