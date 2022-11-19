@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <div class="row">
+    <div class="row q-ma-md formulario-row">
       <div class="col-12">
         <q-form
           @submit="enviarCariarUsuario"
@@ -15,50 +15,89 @@
               :key="'input-' + input.slug"
             >
               <p class="formulario__input-label">
-                {{ input.label }} <span v-if="input.obrigatorio" class="text-red">*</span>
+                {{ input.label }}
+                <span v-if="input.obrigatorio" class="text-red">*</span>
               </p>
 
               <q-input
                 v-if="input.tipo == 'text'"
-                rounded outlined
+                rounded
+                outlined
                 v-model="input.valor"
                 :label="input.placeholder"
-                :rules="input.obrigatorio ? [(val) => (val && input.valor.length > 0) || 'Por favor, digite algo'] : []"
+                :rules="
+                  input.obrigatorio
+                    ? [
+                        (val) =>
+                          (val && input.valor.length > 0) ||
+                          'Por favor, digite algo',
+                      ]
+                    : []
+                "
               />
 
               <q-input
                 v-if="input.tipo == 'number'"
                 min="2"
                 type="number"
-                rounded outlined
+                rounded
+                outlined
                 v-model="input.valor"
                 :label="input.placeholder"
-                :rules="input.obrigatorio ? [(val) => (val && input.valor > 3 && input.valor < 100) || 'Por favor, digite ou selecione um número'] : []"
+                :rules="
+                  input.obrigatorio
+                    ? [
+                        (val) =>
+                          (val && input.valor > 3 && input.valor < 100) ||
+                          'Por favor, digite ou selecione um número',
+                      ]
+                    : []
+                "
               />
 
               <q-select
                 v-if="input.tipo == 'select' && !input.outro"
-                rounded outlined
+                rounded
+                outlined
                 v-model="input.valor"
                 :options="input.itens"
                 option-label="nome"
                 @update:model-value="input.onClickFunction(input, input.valor)"
                 :label="input.placeholder"
-                :rules="input.obrigatorio ? [(val) => (val && input.valor) || 'Por favor, selecione algo'] : []"
+                :rules="
+                  input.obrigatorio
+                    ? [
+                        (val) =>
+                          (val && input.valor) || 'Por favor, selecione algo',
+                      ]
+                    : []
+                "
               />
 
               <q-input
                 v-if="input.tipo == 'select' && input.outro"
-                rounded outlined
+                rounded
+                outlined
                 v-model="input.valor"
                 label="Outro, qual?"
-                :rules="input.obrigatorio ? [(val) => (val && input.valor.length > 0) || 'Por favor, digite algo'] : []"
+                :rules="
+                  input.obrigatorio
+                    ? [
+                        (val) =>
+                          (val && input.valor.length > 0) ||
+                          'Por favor, digite algo',
+                      ]
+                    : []
+                "
               />
 
               <span v-if="input.tipo == 'termo'">
                 <q-checkbox
                   v-model="input.valor"
-                  :rules="[(val) => (val && input.valor) || 'Aceite os termos para continuar']"
+                  :rules="[
+                    (val) =>
+                      (val && input.valor) || 'Aceite os termos para continuar',
+                  ]"
                 >
                   Aceitar os termos e condições
                 </q-checkbox>
@@ -66,21 +105,32 @@
             </div>
           </div>
           <div class="formulario__botoes">
-            <q-btn rounded flat label="Limpar" type="reset" color="primary" size="lg"/>
-            <q-btn rounded label="Salvar" type="submit" color="primary" size="lg"/>
+            <q-btn
+              rounded
+              flat
+              label="Limpar"
+              type="reset"
+              color="primary"
+              size="lg"
+            />
+            <q-btn
+              rounded
+              label="Salvar"
+              type="submit"
+              color="primary"
+              size="lg"
+            />
           </div>
         </q-form>
 
-        <div class="q-mt-xl text-center text-subtitle1">
+        <div class="q-mt-xl text-center">
           Os dados de usuário são armazenados em <b>cookies</b>. Esses dados são
-          persistidos para permitir a progressão no módulo
-          <b>Praticar</b>.<br />
+          persistidos para permitir a progressão no módulo <b>Praticar</b>.
           Estes dados também são refletidos nos servidores da aplicação e servem
           para realização de análises, estas que fundamentam uma pesquisa na
-          área de tecnologia. <br />
-          Esta aplicação se trata de um instrumento de pesquisa para um TCC, que
-          tem como objetivo realizar sessões de leitura, oferecendo uma prática
-          virtualmente assistida.<br />
+          área de tecnologia. Esta aplicação se trata de um instrumento de
+          pesquisa para um TCC, que tem como objetivo realizar sessões de
+          leitura, oferecendo uma prática virtualmente assistida.<br />
         </div>
       </div>
     </div>
@@ -96,7 +146,7 @@
 </template>
 
 <script>
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 
 // import Loading from "../../components/Loading.vue";
 
@@ -116,7 +166,7 @@ export default defineComponent({
           placeholder: "Nome",
           tipo: "text",
           valor: null,
-          obrigatorio: true
+          obrigatorio: true,
         },
         {
           slug: "idade",
@@ -124,7 +174,7 @@ export default defineComponent({
           placeholder: "Idade",
           tipo: "number",
           valor: null,
-          obrigatorio: true
+          obrigatorio: true,
         },
         {
           slug: "sexo",
@@ -142,9 +192,8 @@ export default defineComponent({
             },
           ],
           valor: null,
-          onClickFunction: (event, item) => {
-          },
-          obrigatorio: true
+          onClickFunction: (event, item) => {},
+          obrigatorio: true,
         },
         {
           slug: "profissao",
@@ -154,9 +203,9 @@ export default defineComponent({
           itens: [],
           valor: null,
           onClickFunction: (event, item) => {
-            if (item['id'] == 'outro') {
-              event['valor'] = null;
-              event['outro'] = true;
+            if (item["id"] == "outro") {
+              event["valor"] = null;
+              event["outro"] = true;
             }
           },
           obrigatorio: true,
@@ -177,8 +226,7 @@ export default defineComponent({
             },
           ],
           valor: null,
-          onClickFunction: (event, item) => {
-          },
+          onClickFunction: (event, item) => {},
           obrigatorio: true,
         },
         {
@@ -189,9 +237,9 @@ export default defineComponent({
           itens: [],
           valor: null,
           onClickFunction: (event, item) => {
-            if (item['id'] == 'outro') {
-              event['valor'] = null;
-              event['outro'] = true;
+            if (item["id"] == "outro") {
+              event["valor"] = null;
+              event["outro"] = true;
             }
           },
         },
@@ -203,9 +251,9 @@ export default defineComponent({
           itens: [],
           valor: null,
           onClickFunction: (event, item) => {
-            if (item['id'] == 'outro') {
-              event['valor'] = null;
-              event['outro'] = true;
+            if (item["id"] == "outro") {
+              event["valor"] = null;
+              event["outro"] = true;
             }
           },
         },
@@ -216,12 +264,12 @@ export default defineComponent({
           tipo: "select",
           itens: [],
           valor: null,
-          onClickFunction: (event, item) => {
-          },
+          onClickFunction: (event, item) => {},
         },
         {
           slug: "termo",
-          label: "Termo de responsabilidade para realização de pesquisa científica",
+          label:
+            "Termo de responsabilidade para realização de pesquisa científica",
           tipo: "termo",
           valor: null,
           obrigatorio: true,
@@ -247,9 +295,9 @@ export default defineComponent({
         this.inputs.forEach((input) => {
           console.log(input);
           let valor;
-          if(input.tipo == 'select' && !input.outro){
+          if (input.tipo == "select" && !input.outro) {
             valor = input.valor.id;
-          }else{
+          } else {
             valor = input.valor;
           }
           form.append(input.slug, valor);
@@ -284,11 +332,10 @@ export default defineComponent({
     async inicio() {
       this.dialog = true;
       try {
-        await this.$api.get("/user/get-dados-selects")
-          .then((response) => {
-            console.log(response.data);
-            this.setarItens(response.data);
-          });
+        await this.$api.get("/user/get-dados-selects").then((response) => {
+          console.log(response.data);
+          this.setarItens(response.data);
+        });
       } catch (e) {
         console.log(e);
       }
@@ -314,6 +361,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.formulario-row {
+  max-width: 700px;
+}
+
 .formulario {
   &__titulo {
     margin: 0 0 14px 0;

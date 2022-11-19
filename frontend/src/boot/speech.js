@@ -5,7 +5,7 @@ export default boot(({ app, store }) => {
     window.SpeechRecognition || window.webkitSpeechRecognition || null);
   const recognition = new window.SpeechRecognition();
 
-  const maxListenTries = 7;
+  const maxListenTries = 3;
   let listenTries = 0;
 
   recognition.continuous = false;
