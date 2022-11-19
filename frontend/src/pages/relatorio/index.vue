@@ -2,7 +2,7 @@
   <q-page>
     <div class="row w-full">
       <div class="col-12">
-        <h4 class="nivel-titulo">Relatório por níveis</h4>
+        <h4 class="text-h4 text-bold nivel-titulo">Relatório por níveis</h4>
       </div>
       <div
         class="col-12"
@@ -11,17 +11,18 @@
       >
         <q-card class="card-nivel" flat bordered>
           <q-card-section class="card-nivel__titulo" @click="nivel.situacao ? nivel.expanded = !nivel.expanded : false">
-            <div class="text-h5">{{ nivel.titulo }}</div>
+            <div class="text-h5 text-bold card-nivel__titulo-nivel">{{ nivel.titulo }}</div>
             <q-btn
               v-if="nivel.situacao"
               color="grey" round flat dense
+              size="lg"
               :icon="nivel.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
             />
             <q-icon
               v-else
               round flat dense
               color="grey"
-              size="md"
+              size="lg"
               name="lock"
             />
           </q-card-section>
@@ -31,9 +32,9 @@
               <q-markup-table class="card-nivel__expandido-tabela">
                 <thead>
                 <tr>
-                  <th class="text-left">Frase</th>
-                  <th class="text-center">Tentativas</th>
-                  <th class="text-center">Procentagem</th>
+                  <th class="text-left"><div class="text-h6">Frase</div></th>
+                  <th class="text-center"><div class="text-h6">Tentativas</div></th>
+                  <th class="text-center"><div class="text-h6">Procentagem</div></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,7 +44,9 @@
                 >
                   <td class="text-left">{{ frase.texto }}</td>
                   <td class="text-center">{{ frase.tentativas }}</td>
-                  <td class="text-center text-weight-bolder" :class="frase.porcentagem_acerto > 70 ? 'text-green' : 'text-red'">{{ frase.porcentagem_acerto }}%</td>
+                  <td class="text-center text-weight-bolder"
+                      :class="frase.porcentagem_acerto > 70 ? 'text-green' : 'text-red'">{{ frase.porcentagem_acerto }}%
+                  </td>
                 </tr>
                 </tbody>
               </q-markup-table>
@@ -53,12 +56,14 @@
                   show-value
                   class="text-blue text-weight-bolder"
                   :value="nivel.porcentagem_geral"
-                  size="60px"
+                  size="80px"
                   color="blue"
                 >
                   {{ nivel.porcentagem_geral }}%
                 </q-circular-progress>
+                <p>PORCENTAGEM</p>
                 <p>GERAL</p>
+                <p>DO NÍVEL{{ nivel.id }}</p>
               </div>
             </div>
           </q-slide-transition>
@@ -133,6 +138,11 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
     font-weight: bold;
+
+    &-nivel{
+      margin-top: auto;
+      margin-block: auto;
+    }
   }
 
   &__expandido {
@@ -145,8 +155,7 @@ export default defineComponent({
     }
 
     &-geral {
-      padding-left: 15px;
-      padding-right: 15px;
+      padding: 15px;
       text-align: center;
       margin: auto;
 
@@ -156,6 +165,7 @@ export default defineComponent({
       }
 
       > p {
+        font-weight: bold;
         margin: 0;
       }
     }

@@ -30,7 +30,7 @@ class RelatorioController extends Controller
             for($nivel = 1; $nivel <= $ultimo_nivel; $nivel++) {
                 $dadosNivel['titulo'] = 'Nível ' . $nivel;
 
-                $params['nivel'] = $nivel;
+                $params['nivel'] = $dadosNivel['id'] = $nivel;
                 $respostas = $this->frase->findRespostas($params);
 
                 if($dadosNivel['situacao'] = (bool)$respostas->first()){

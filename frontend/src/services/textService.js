@@ -3,6 +3,7 @@ import store from "../store";
 
 export async function obterTextoDoNivel(userID, setLevelMethod) {
   let textToGo = "";
+  let self = this;
   try {
     let dados = await api.get(`/frase/get-frase?id_user=${userID}`);
     textToGo = dados.data.frase;
@@ -14,7 +15,7 @@ export async function obterTextoDoNivel(userID, setLevelMethod) {
   } catch (e) {
     // console.log(e);
     alert(e.response.data.message);
-    return [];
+    return false;
   }
 }
 

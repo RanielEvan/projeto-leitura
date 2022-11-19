@@ -1,14 +1,15 @@
 <template>
-  <div class="">
+  <div class="text-h5">
     Transcrição:
-    <strong class="text-h6">{{ transcricaoParcial }}</strong>
+    <strong class="text-h4">{{ transcricaoParcial }}</strong>
 
     <q-separator class="q-my-md" />
 
     <b>Transcrições (Acurácia):</b>
     <div class="text-center">
       <div v-for="(item, index) in listaTranscricoes" :key="index">
-        <span class="text-subtitle1"> {{ item }}</span>
+        <hr>
+        <span class="text-h5"> {{ item }}</span>
       </div>
     </div>
 

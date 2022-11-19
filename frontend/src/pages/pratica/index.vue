@@ -9,16 +9,18 @@
         <Simulator :levelText="frase.texto">
           <q-btn
             v-if="!isListening"
-            color="green"
-            icon="mic"
-            size="lg"
-            class="text-bold"
+            color="green" icon="mic"
+            size="lg" class="btns-praticar"
             @click="$startListening(); getFrase()"
           >
             Começar a leitura
           </q-btn>
 
-          <q-btn v-else color="red" icon="mic" @click="$stopListening()">
+          <q-btn
+            v-else
+            color="red" icon="mic"
+            size="lg" class="btns-praticar"
+            @click="$stopListening()">
             Parar
           </q-btn>
         </Simulator>
@@ -26,7 +28,7 @@
 
       <!-- TRANSCRICAO -->
       <q-card-section>
-        <Transcriptions />
+        <Transcriptions/>
       </q-card-section>
     </q-card>
   </div>
@@ -35,10 +37,10 @@
 <script>
 import Simulator from "src/components/Simulator";
 import Transcriptions from "src/components/Transcriptions";
-import { defineComponent } from "vue";
-import { mapMutations } from "vuex";
+import {defineComponent} from "vue";
+import {mapMutations} from "vuex";
 
-import { obterTextoDoNivel } from "src/services/textService";
+import {obterTextoDoNivel} from "src/services/textService";
 
 export default defineComponent({
   components: {
@@ -86,10 +88,20 @@ export default defineComponent({
 
     async getFrase() {
       this.dialog = true;
-      this.frase = await obterTextoDoNivel(this.usuario.id, this.setLevel);
-      this.$store.state.app.transcriptSessions = [];
+      try {
+        this.frase = await obterTextoDoNivel(this.usuario.id, this.setLevel);
+        this.$store.state.app.transcriptSessions = [];
+      } catch (e) {
+        this.$router.push('/relatorio');
+      }
       this.dialog = false;
     },
   },
 });
 </script>
+<style lang="scss" scoped>
+.btns-praticar {
+  font-weight: bold;
+  margin: 40px 0;
+}
+</style>
