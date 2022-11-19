@@ -5,7 +5,7 @@ export default boot(({ app, store }) => {
     window.SpeechRecognition || window.webkitSpeechRecognition || null);
   const recognition = new window.SpeechRecognition();
 
-  const maxListenTries = 2;
+  const maxListenTries = 7;
   let listenTries = 0;
 
   recognition.continuous = false;
@@ -60,7 +60,8 @@ export default boot(({ app, store }) => {
         if (event.results[i].isFinal) {
           finalTranscript += transcript + " ";
 
-          const acuracy = app.config.globalProperties.$compareTranscript(finalTranscript);
+          const acuracy =
+            app.config.globalProperties.$compareTranscript(finalTranscript);
 
           store.dispatch("app/addTranscriptSession", {
             transcript: finalTranscript,
@@ -69,7 +70,7 @@ export default boot(({ app, store }) => {
 
           finalTranscript = "";
 
-          if(acuracy >= 0.7){
+          if (acuracy >= 0.7) {
             this.fimFrase();
           }
         } else {

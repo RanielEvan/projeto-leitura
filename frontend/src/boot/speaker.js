@@ -1,7 +1,7 @@
 import { boot } from "quasar/wrappers";
 
 export default boot(({ app, store }) => {
-  let pitch = 0.8;
+  let pitch = 1;
   let rate = 1.0;
   let synth = window.speechSynthesis;
   let voice = null;

@@ -11,6 +11,7 @@ export async function obterTextoDoNivel(userID, setLevelMethod) {
     if (setLevelMethod) {
       setLevelMethod(textToGo);
     }
+
     return textToGo;
   } catch (e) {
     // console.log(e);

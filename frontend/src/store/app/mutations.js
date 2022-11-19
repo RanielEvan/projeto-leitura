@@ -18,6 +18,9 @@ export function addTranscriptSession(state, sessionObj) {
 export function setSpeaking(state, value) {
   state.isSpeaking = value;
 }
+export function resetTranscripts(state) {
+  state.transcriptSessions = [];
+}
 
 // export function settextToTalk(state) {
 //   state.textToTalk = getTextFromLevel(state.level);

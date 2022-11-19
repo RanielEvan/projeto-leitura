@@ -70,8 +70,21 @@
             <q-btn rounded label="Salvar" type="submit" color="primary" size="lg"/>
           </div>
         </q-form>
+
+        <div class="q-mt-xl text-center text-subtitle1">
+          Os dados de usuário são armazenados em <b>cookies</b>. Esses dados são
+          persistidos para permitir a progressão no módulo
+          <b>Praticar</b>.<br />
+          Estes dados também são refletidos nos servidores da aplicação e servem
+          para realização de análises, estas que fundamentam uma pesquisa na
+          área de tecnologia. <br />
+          Esta aplicação se trata de um instrumento de pesquisa para um TCC, que
+          tem como objetivo realizar sessões de leitura, oferecendo uma prática
+          virtualmente assistida.<br />
+        </div>
       </div>
     </div>
+
     <!--    <div class="q-pa-md">-->
     <!--      <div class="q-gutter-md" style="max-width: 300px">-->
     <!--    -->

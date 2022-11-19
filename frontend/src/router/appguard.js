@@ -4,16 +4,12 @@ export const appGuard = (to, from, next) => {
     // Obtem o usuario
     let usuario = JSON.parse(window.localStorage.getItem("leituraUsuario"));
 
-    // Valida
-    if (to.name == "pratica" && !usuario) {
-      if (from.name != "inicio") {
-        next("inicio");
-      }
+    if (usuario && to.name == "inicio") {
       return;
-    } else if (to.name == "inicio" && usuario) {
-      if (from.name != "pratica") {
-        next("praticar");
-      }
+    }
+
+    if (!usuario && (to.name == "praticar" || to.name == "relatorio")) {
+      next("inicio");
       return;
     }
 

@@ -3,28 +3,39 @@
     <q-header reveal class="bg-primary text-white headerEl">
       <q-toolbar class="headerEl__toolbar">
         <q-btn
-          dense flat round size="lg"
-          icon="menu" @click="toggleLeftDrawer"
+          dense
+          flat
+          round
+          size="lg"
+          icon="menu"
+          @click="toggleLeftDrawer"
           v-if="routeTitle !== 'Início'"
         />
 
         <q-toolbar-title class="headerEl__toolbar-center">
           <q-avatar>
-            <q-icon :name="routeIcon" size="lg"/>
+            <q-icon :name="routeIcon" size="lg" />
           </q-avatar>
 
           {{ routeTitle }}
         </q-toolbar-title>
 
         <q-btn
-          dense flat round size="lg"
+          dense
+          flat
+          round
+          size="lg"
           :icon="audioOn ? 'volume_up' : 'volume_off'"
+          class="q-mx-md"
           @click="toggleAudio"
         />
 
         <q-btn
           v-if="routeTitle !== 'Início'"
-          dense flat round size="lg"
+          dense
+          flat
+          round
+          size="lg"
           icon="logout"
           @click="sair"
         />
@@ -40,7 +51,7 @@
     >
       <q-scroll-area class="fit drawerEl">
         <div class="text-center">
-          <h5 class="q-my-lg">Projeto<br/><b>Leitura</b></h5>
+          <h5 class="q-my-lg">Projeto<br /><b>Leitura</b></h5>
         </div>
         <q-list padding class="menu-list">
           <MenuItem
@@ -61,7 +72,7 @@
         <!-- CONTEUDO DAS PAGINAS -->
 
         <!-- <transition name="slide-fade"> -->
-        <router-view/>
+        <router-view />
         <!-- </transition> -->
       </q-page>
     </q-page-container>
@@ -69,7 +80,7 @@
 </template>
 
 <script>
-import {ref} from "vue";
+import { ref } from "vue";
 import MenuItem from "src/components/MenuItem.vue";
 
 export default {
@@ -82,7 +93,7 @@ export default {
       },
     };
   },
-  components: {MenuItem},
+  components: { MenuItem },
   computed: {
     routes() {
       return this.$router.options.routes[0].children;

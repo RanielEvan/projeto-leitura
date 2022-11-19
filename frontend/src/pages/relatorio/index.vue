@@ -10,17 +10,29 @@
         :key="`nivel-${nivel.titulo}`"
       >
         <q-card class="card-nivel" flat bordered>
-          <q-card-section class="card-nivel__titulo" @click="nivel.situacao ? nivel.expanded = !nivel.expanded : false">
-            <div class="text-h5 text-bold card-nivel__titulo-nivel">{{ nivel.titulo }}</div>
+          <q-card-section
+            class="card-nivel__titulo"
+            @click="nivel.situacao ? (nivel.expanded = !nivel.expanded) : false"
+          >
+            <div class="text-h5 text-bold card-nivel__titulo-nivel">
+              {{ nivel.titulo }}
+            </div>
             <q-btn
               v-if="nivel.situacao"
-              color="grey" round flat dense
+              color="grey"
+              round
+              flat
+              dense
               size="lg"
-              :icon="nivel.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+              :icon="
+                nivel.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
+              "
             />
             <q-icon
               v-else
-              round flat dense
+              round
+              flat
+              dense
               color="grey"
               size="lg"
               name="lock"
@@ -31,23 +43,31 @@
             <div v-show="nivel.expanded" class="card-nivel__expandido">
               <q-markup-table class="card-nivel__expandido-tabela">
                 <thead>
-                <tr>
-                  <th class="text-left"><div class="text-h6">Frase</div></th>
-                  <th class="text-center"><div class="text-h6">Tentativas</div></th>
-                  <th class="text-center"><div class="text-h6">Procentagem</div></th>
-                </tr>
+                  <tr>
+                    <th class="text-left"><div class="text-h6">Frase</div></th>
+                    <th class="text-center">
+                      <div class="text-h6">Tentativas</div>
+                    </th>
+                    <th class="text-center">
+                      <div class="text-h6">Porcentagem</div>
+                    </th>
+                  </tr>
                 </thead>
                 <tbody>
-                <tr
-                  v-for="frase in nivel.frases"
-                  :key="`frase-${frase.id}`"
-                >
-                  <td class="text-left">{{ frase.texto }}</td>
-                  <td class="text-center">{{ frase.tentativas }}</td>
-                  <td class="text-center text-weight-bolder"
-                      :class="frase.porcentagem_acerto > 70 ? 'text-green' : 'text-red'">{{ frase.porcentagem_acerto }}%
-                  </td>
-                </tr>
+                  <tr v-for="frase in nivel.frases" :key="`frase-${frase.id}`">
+                    <td class="text-left">{{ frase.texto }}</td>
+                    <td class="text-center">{{ frase.tentativas }}</td>
+                    <td
+                      class="text-center text-weight-bolder"
+                      :class="
+                        frase.porcentagem_acerto > 70
+                          ? 'text-green'
+                          : 'text-red'
+                      "
+                    >
+                      {{ frase.porcentagem_acerto }}%
+                    </td>
+                  </tr>
                 </tbody>
               </q-markup-table>
 
@@ -74,7 +94,7 @@
 </template>
 
 <script>
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "PageIndex",
@@ -139,7 +159,7 @@ export default defineComponent({
     justify-content: space-between;
     font-weight: bold;
 
-    &-nivel{
+    &-nivel {
       margin-top: auto;
       margin-block: auto;
     }
@@ -170,6 +190,5 @@ export default defineComponent({
       }
     }
   }
-
 }
 </style>

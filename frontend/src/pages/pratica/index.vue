@@ -9,18 +9,26 @@
         <Simulator :levelText="frase.texto">
           <q-btn
             v-if="!isListening"
-            color="green" icon="mic"
-            size="lg" class="btns-praticar"
-            @click="$startListening(); getFrase()"
+            color="green"
+            icon="mic"
+            size="lg"
+            class="btns-praticar"
+            @click="
+              $startListening();
+              getFrase();
+            "
           >
             Começar a leitura
           </q-btn>
 
           <q-btn
             v-else
-            color="red" icon="mic"
-            size="lg" class="btns-praticar"
-            @click="$stopListening()">
+            color="red"
+            icon="mic"
+            size="lg"
+            class="btns-praticar"
+            @click="$stopListening()"
+          >
             Parar
           </q-btn>
         </Simulator>
@@ -28,7 +36,7 @@
 
       <!-- TRANSCRICAO -->
       <q-card-section>
-        <Transcriptions/>
+        <Transcriptions />
       </q-card-section>
     </q-card>
   </div>
@@ -37,10 +45,10 @@
 <script>
 import Simulator from "src/components/Simulator";
 import Transcriptions from "src/components/Transcriptions";
-import {defineComponent} from "vue";
-import {mapMutations} from "vuex";
+import { defineComponent } from "vue";
+import { mapMutations } from "vuex";
 
-import {obterTextoDoNivel} from "src/services/textService";
+import { obterTextoDoNivel } from "src/services/textService";
 
 export default defineComponent({
   components: {
@@ -52,7 +60,8 @@ export default defineComponent({
 
   data() {
     return {
-      levelHint: "Vamos praticar! Leia em voz alta as palavras que aparecerão na tela. Para iniciar toque no botão verde.",
+      levelHint:
+        "Vamos praticar! Leia em voz alta as palavras que aparecerão na tela. Para iniciar toque no botão verde.",
 
       dialog: false,
       usuario: {},
@@ -77,6 +86,7 @@ export default defineComponent({
   methods: {
     ...mapMutations({
       setLevel: "app/setLevel",
+      resetTranscripts: "app/resetTranscripts",
     }),
     verificarUsuario() {
       this.usuario = JSON.parse(window.localStorage.getItem("leituraUsuario"));
@@ -90,9 +100,9 @@ export default defineComponent({
       this.dialog = true;
       try {
         this.frase = await obterTextoDoNivel(this.usuario.id, this.setLevel);
-        this.$store.state.app.transcriptSessions = [];
+        this.resetTranscripts();
       } catch (e) {
-        this.$router.push('/relatorio');
+        this.$router.push("/relatorio");
       }
       this.dialog = false;
     },

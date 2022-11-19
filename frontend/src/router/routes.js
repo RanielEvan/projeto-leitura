@@ -19,7 +19,7 @@ const routes = [
       },
 
       {
-        name: "pratica",
+        name: "praticar",
         path: "/praticar",
         component: () => import("pages/pratica"),
         beforeEnter: appGuard,
@@ -37,7 +37,7 @@ const routes = [
         beforeEnter: appGuard,
         meta: {
           title: "Relatório",
-          icon: "chart",
+          icon: "analytics",
         },
         exibir: true,
       },
