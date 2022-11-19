@@ -271,7 +271,7 @@ export default defineComponent({
           label:
             "Termo de responsabilidade para realização de pesquisa científica",
           tipo: "termo",
-          valor: null,
+          valor: false,
           obrigatorio: true,
         },
       ],
