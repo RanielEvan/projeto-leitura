@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddNivelTableUsers extends Migration
+class CreateTableTurmas extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,14 @@ class AddNivelTableUsers extends Migration
      */
     public function up()
     {
-        if(!Schema::hasColumn('users', 'nivel')){
-            Schema::table('users', function (Blueprint $table) {
-               $table->integer('nivel')->default(1);
+        if(!Schema::hasTable('turmas')){
+            Schema::create('turmas', function (Blueprint $table) {
+                $table->id();
+                $table->string('nome');
+                $table->string('escola');
+                $table->string('descricao');
+                $table->string('cidade');
+                $table->timestamps();
             });
         }
     }

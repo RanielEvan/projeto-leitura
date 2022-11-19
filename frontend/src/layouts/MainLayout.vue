@@ -1,27 +1,30 @@
 <template>
   <q-layout view="lHh LpR fFf">
     <q-header reveal class="bg-primary text-white headerEl">
-      <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer"/>
+      <q-toolbar class="headerEl__toolbar">
+        <q-btn
+          dense flat round size="lg"
+          icon="menu" @click="toggleLeftDrawer"
+          v-if="routeTitle !== 'Início'"
+        />
 
-        <q-toolbar-title>
+        <q-toolbar-title class="headerEl__toolbar-center">
           <q-avatar>
-            <q-icon :name="routeIcon" size="sm"/>
+            <q-icon :name="routeIcon" size="lg"/>
           </q-avatar>
 
           {{ routeTitle }}
         </q-toolbar-title>
 
         <q-btn
-          dense
-          flat
-          round
+          dense flat round size="lg"
           :icon="audioOn ? 'volume_up' : 'volume_off'"
           @click="toggleAudio"
         />
 
         <q-btn
-          dense flat round
+          v-if="routeTitle !== 'Início'"
+          dense flat round size="lg"
           icon="logout"
           @click="sair"
         />
@@ -29,6 +32,7 @@
     </q-header>
 
     <q-drawer
+      v-if="routeTitle !== 'Início'"
       v-model="leftDrawerOpen"
       show-if-above
       :width="200"
@@ -45,6 +49,7 @@
             :path="route.path"
             :title="route.meta.title"
             :icon="route.meta.icon"
+            :exibir="route.exibir"
           />
         </q-list>
       </q-scroll-area>
@@ -110,7 +115,16 @@ export default {
 
 <style lang="scss" scoped>
 .headerEl {
+  height: 70px;
   border-radius: 0 0 0 20px;
+
+  &__toolbar {
+    height: 100%;
+
+    &-center {
+      font-size: 1.8rem;
+    }
+  }
 }
 
 .menu-list .q-item {

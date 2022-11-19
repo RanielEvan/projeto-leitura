@@ -15,6 +15,7 @@ const routes = [
           title: "Início",
           icon: "home",
         },
+        exibir: false,
       },
 
       {
@@ -26,6 +27,7 @@ const routes = [
           title: "Praticar",
           icon: "start",
         },
+        exibir: true,
       },
 
       {
@@ -34,9 +36,10 @@ const routes = [
         component: () => import("pages/relatorio"),
         beforeEnter: appGuard,
         meta: {
-          title: "Relatorio",
+          title: "Relatório",
           icon: "chart",
         },
+        exibir: true,
       },
     ],
   },

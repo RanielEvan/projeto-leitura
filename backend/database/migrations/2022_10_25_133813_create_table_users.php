@@ -18,10 +18,14 @@ class CreateTableUsers extends Migration
                 $table->id();
                 $table->string('nome');
                 $table->integer('idade');
-                $table->tinyText('sexo')->nullable();
-                $table->string('nivel_escolaridade')->nullable();
-                $table->string('cidade')->nullable();
-                $table->string('bairro')->nullable();
+                $table->tinyText('sexo');
+                $table->string('profissao');
+                $table->string('nivel_escolaridade');
+                $table->string('motivo_deixar_escola')->nullable();
+                $table->string('motivo_voltar_escola')->nullable();
+                $table->integer('id_turma')->unsigned()->nullable();
+                $table->integer('nivel')->default(1);
+                $table->boolean('termo')->default(false);
                 $table->enum('status', ['Ativo', 'Inativo'])->default('Ativo');
                 $table->timestamps();
             });

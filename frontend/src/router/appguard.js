@@ -12,7 +12,7 @@ export const appGuard = (to, from, next) => {
       return;
     } else if (to.name == "inicio" && usuario) {
       if (from.name != "pratica") {
-        next("pratica");
+        next("praticar");
       }
       return;
     }

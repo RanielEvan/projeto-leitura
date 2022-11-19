@@ -5,6 +5,7 @@
     v-ripple
     :to="path"
     @click="$stopListening"
+    v-if="exibir"
   >
     <q-item-section avatar>
       <q-icon :name="icon" />
@@ -31,6 +32,10 @@ export default {
       type: String,
       default: "",
     },
+    exibir: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
@@ -39,6 +44,6 @@ export default {
 .itemMenu {
   font-family: Verdana;
   background-color: RGBA(0, 0, 0, 0.1);
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 </style>

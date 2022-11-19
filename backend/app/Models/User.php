@@ -17,9 +17,14 @@ class User extends Model
         'nome',
         'idade',
         'sexo',
+        'profissao',
         'nivel_escolaridade',
-        'cidade',
-        'bairro',
+        'motivo_deixar_escola',
+        'motivo_voltar_escola',
+        'id_turma',
+        'nivel',
+        'termo',
+        'status',
         'created_at',
         'updated_at'
     ];

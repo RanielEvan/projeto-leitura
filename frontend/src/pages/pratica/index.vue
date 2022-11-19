@@ -2,7 +2,7 @@
   <div>
     <q-card class="text-center">
       <q-card-section>
-        <div class="text-h6">Práticas de nível {{ frase.nivel }}</div>
+        <div class="text-h4 text-bold">Práticas de nível {{ frase.nivel }}</div>
       </q-card-section>
 
       <q-card-section>
@@ -11,6 +11,8 @@
             v-if="!isListening"
             color="green"
             icon="mic"
+            size="lg"
+            class="text-bold"
             @click="$startListening(); getFrase()"
           >
             Começar a leitura

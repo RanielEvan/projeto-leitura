@@ -14,53 +14,60 @@
               v-for="input in inputs"
               :key="'input-' + input.slug"
             >
+              <p class="formulario__input-label">
+                {{ input.label }} <span v-if="input.obrigatorio" class="text-red">*</span>
+              </p>
+
               <q-input
                 v-if="input.tipo == 'text'"
-                rounded
-                outlined
+                rounded outlined
                 v-model="input.valor"
-                :label="input.label"
-                :placeholder="input.placeholder"
-                :rules="[
-                  (val) =>
-                    (val && input.valor.length > 0) || 'Por favor, digite algo',
-                ]"
+                :label="input.placeholder"
+                :rules="input.obrigatorio ? [(val) => (val && input.valor.length > 0) || 'Por favor, digite algo'] : []"
               />
 
               <q-input
                 v-if="input.tipo == 'number'"
+                min="2"
                 type="number"
-                rounded
-                outlined
+                rounded outlined
                 v-model="input.valor"
-                :label="input.label"
-                :placeholder="input.placeholder"
-                :rules="[
-                  (val) =>
-                    (val && input.valor > 3 && input.valor < 100) ||
-                    'Por favor, digite ou selecione um número',
-                ]"
+                :label="input.placeholder"
+                :rules="input.obrigatorio ? [(val) => (val && input.valor > 3 && input.valor < 100) || 'Por favor, digite ou selecione um número'] : []"
               />
 
               <q-select
-                v-if="input.tipo == 'select'"
-                rounded
-                outlined
+                v-if="input.tipo == 'select' && !input.outro"
+                rounded outlined
                 v-model="input.valor"
                 :options="input.itens"
                 option-label="nome"
-                :label="input.label"
-                :placeholder="input.placeholder"
-                :rules="[
-                  (val) => (val && input.valor) || 'Por favor, selecione algo',
-                ]"
-                @input-value="input.onClickFunction($event, input.value)"
+                @update:model-value="input.onClickFunction(input, input.valor)"
+                :label="input.placeholder"
+                :rules="input.obrigatorio ? [(val) => (val && input.valor) || 'Por favor, selecione algo'] : []"
               />
+
+              <q-input
+                v-if="input.tipo == 'select' && input.outro"
+                rounded outlined
+                v-model="input.valor"
+                label="Outro, qual?"
+                :rules="input.obrigatorio ? [(val) => (val && input.valor.length > 0) || 'Por favor, digite algo'] : []"
+              />
+
+              <span v-if="input.tipo == 'termo'">
+                <q-checkbox
+                  v-model="input.valor"
+                  :rules="[(val) => (val && input.valor) || 'Aceite os termos para continuar']"
+                >
+                  Aceitar os termos e condições
+                </q-checkbox>
+              </span>
             </div>
           </div>
           <div class="formulario__botoes">
-            <q-btn rounded flat label="Limpar" type="reset" color="primary" />
-            <q-btn rounded label="Salvar" type="submit" color="primary" />
+            <q-btn rounded flat label="Limpar" type="reset" color="primary" size="lg"/>
+            <q-btn rounded label="Salvar" type="submit" color="primary" size="lg"/>
           </div>
         </q-form>
       </div>
@@ -76,7 +83,7 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
 
 // import Loading from "../../components/Loading.vue";
 
@@ -86,27 +93,30 @@ export default defineComponent({
 
   data() {
     return {
-      hint: "Bem vindo ao Projeto Leitura!",
+      hint: "Bem vindo ao Projeto Leitura! Preencha os dados do formulário para continuar.",
       dialog: false,
 
       inputs: [
         {
           slug: "nome",
-          placeholder: "Nome",
           label: "Digite seu nome",
+          placeholder: "Nome",
           tipo: "text",
           valor: null,
+          obrigatorio: true
         },
         {
           slug: "idade",
-          placeholder: "Idade",
           label: "Digite sua idade",
+          placeholder: "Idade",
           tipo: "number",
           valor: null,
+          obrigatorio: true
         },
         {
           slug: "sexo",
           label: "Selecione seu sexo",
+          placeholder: "Sexo",
           tipo: "select",
           itens: [
             {
@@ -119,16 +129,89 @@ export default defineComponent({
             },
           ],
           valor: null,
+          onClickFunction: (event, item) => {
+          },
+          obrigatorio: true
         },
         {
-          slug: "cidade",
-          label: "Selecione sua cidade",
+          slug: "profissao",
+          label: "Selecione sua profissão",
+          placeholder: "Profissão",
           tipo: "select",
           itens: [],
           valor: null,
           onClickFunction: (event, item) => {
-            this.buscarBairros(item);
+            if (item['id'] == 'outro') {
+              event['valor'] = null;
+              event['outro'] = true;
+            }
           },
+          obrigatorio: true,
+        },
+        {
+          slug: "nivel_escolaridade",
+          label: "Selecione seu nível de escolaridade",
+          placeholder: "Nível de escolaridade",
+          tipo: "select",
+          itens: [
+            {
+              id: "Fundamental incompleto",
+              nome: "Fundamental incompleto",
+            },
+            {
+              id: "Médio incompleto",
+              nome: "Médio incompleto",
+            },
+          ],
+          valor: null,
+          onClickFunction: (event, item) => {
+          },
+          obrigatorio: true,
+        },
+        {
+          slug: "motivo_deixar_escola",
+          label: "Selecione o motivo que o fez abandonar a escola",
+          placeholder: "O que te fez ABANDONAR a escola",
+          tipo: "select",
+          itens: [],
+          valor: null,
+          onClickFunction: (event, item) => {
+            if (item['id'] == 'outro') {
+              event['valor'] = null;
+              event['outro'] = true;
+            }
+          },
+        },
+        {
+          slug: "motivo_voltar_escola",
+          label: "Selecione o motivo que o fez voltar a escola",
+          placeholder: "O que te fez VOLTAR a escola",
+          tipo: "select",
+          itens: [],
+          valor: null,
+          onClickFunction: (event, item) => {
+            if (item['id'] == 'outro') {
+              event['valor'] = null;
+              event['outro'] = true;
+            }
+          },
+        },
+        {
+          slug: "id_turma",
+          label: "Selecione sua turma",
+          placeholder: "Turma",
+          tipo: "select",
+          itens: [],
+          valor: null,
+          onClickFunction: (event, item) => {
+          },
+        },
+        {
+          slug: "termo",
+          label: "Termo de responsabilidade para realização de pesquisa científica",
+          tipo: "termo",
+          valor: null,
+          obrigatorio: true,
         },
       ],
     };
@@ -149,18 +232,13 @@ export default defineComponent({
         let form = new FormData();
 
         this.inputs.forEach((input) => {
-          let valor = "";
-          if (
-            input.tipo == "select" &&
-            ["cidade", "bairro"].includes(input.slug)
-          ) {
-            valor = input.valor.nome;
-          } else if (input.tipo == "select") {
+          console.log(input);
+          let valor;
+          if(input.tipo == 'select' && !input.outro){
             valor = input.valor.id;
-          } else {
+          }else{
             valor = input.valor;
           }
-
           form.append(input.slug, valor);
         });
 
@@ -182,34 +260,26 @@ export default defineComponent({
       localStorage.setItem("leituraUsuario", JSON.stringify(usuario));
     },
 
-    async buscarBairros(cidade) {
-      // alert(cidade);
-    },
-
-    setarItens(slug, valores) {
-      this.dialog = true;
-
+    setarItens(dados) {
       this.inputs.forEach((input) => {
-        if (input.slug == slug) {
-          input.itens = valores;
+        if (dados[input.slug]) {
+          input.itens = dados[input.slug];
         }
       });
-
-      this.dialog = false;
     },
 
     async inicio() {
       this.dialog = true;
       try {
-        await this.$axios
-          .get("https://servicodados.ibge.gov.br/api/v1/localidades/distritos")
+        await this.$api.get("/user/get-dados-selects")
           .then((response) => {
-            this.setarItens("cidade", response.data);
+            console.log(response.data);
+            this.setarItens(response.data);
           });
       } catch (e) {
-        this.dialog = false;
         console.log(e);
       }
+      this.dialog = false;
     },
 
     verificarUsuario() {
@@ -224,7 +294,7 @@ export default defineComponent({
   },
 
   mounted() {
-    // this.$speak(this.hint);
+    this.$speak(this.hint);
     this.verificarUsuario();
   },
 });
@@ -239,6 +309,12 @@ export default defineComponent({
 
   &__input {
     margin-bottom: 8px;
+
+    &-label {
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-size: 17px;
+    }
   }
 
   &__botoes {
