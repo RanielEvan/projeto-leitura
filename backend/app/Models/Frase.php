@@ -11,7 +11,7 @@ class Frase extends Model
 
     public function findRespostas($request)
     {
-        $selects = $request['selects'] ?? ['respostas.*'];
+        $selects = isset($request['selects']) ? $request['selects'] : ['respostas.*'];
 
         return DB::table('respostas')->select($selects)
             ->join('users', 'users.id', '=', 'respostas.id_user')

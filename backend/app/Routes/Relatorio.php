@@ -10,6 +10,7 @@ class Relatorio
     {
         return Route::group(['middleware' => $middlware, 'prefix' => $prefix], function () {
             Route::get('/get-relatorio-geral', [\App\Http\Controllers\relatorio\RelatorioController::class, 'buscarRelatorioGeral']);
+            Route::get('/get-relatorio-geral-sistema', [\App\Http\Controllers\relatorio\RelatorioController::class, 'buscarRelatorioGeralSistema']);
         });
     }
 }
