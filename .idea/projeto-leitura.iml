@@ -115,6 +115,13 @@
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/opis/closure" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/ezyang/htmlpurifier" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/maatwebsite/excel" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/myclabs/php-enum" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/phpoffice/phpspreadsheet" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/markbaker/complex" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/markbaker/matrix" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/maennchen/zipstream-php" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

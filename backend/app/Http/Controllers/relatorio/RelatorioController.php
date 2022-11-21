@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\relatorio;
 
+use App\Exports\RelatorioExport;
 use App\Http\Controllers\Controller;
 use App\Models\Frase;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RelatorioController extends Controller
 {
@@ -113,6 +115,8 @@ class RelatorioController extends Controller
                     }
                 }
             }
+
+//            return Excel::download(new RelatorioExport, 'users.xlsx');
 
             return response()->json(['success' => true, 'relatorio_geral' => $relatorio_geral, 'niveis' => $niveis, 'users' => $users]);
         } catch (\Exception $exception) {
